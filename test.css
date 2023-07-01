@@ -1,0 +1,70 @@
+.btn-custom{
+    width: 200px;
+    height: 85px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.row-custom1{
+    margin-top: 10px;
+}
+
+.row-custom2{
+    margin-top: 10px;
+}
+
+.col-custom{
+    margin-top: 50px;
+}
+
+.btn-power{
+    /*border-radius: 50%;*/
+    height: 100px;
+    width: 100px;
+}
+
+
+
+.large-font{
+    font-size: 6em; 
+    font-weight:bold;
+}
+.small-font{
+    font-size: 1.5em;
+}
+.medium-font{
+    font-size: 3em;
+}
+.minus-button{
+    width: 1.4em;
+    height: 2em; 
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+.plus-button{
+    height: 2em; 
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+#setvalue{
+    width: 2em;
+    height: 1.5em;
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+}
+#power{
+    width:50%
+}
+#powerimage{
+    width:3.5em;
+    height:3.5em;
+}
+.my-top-margin{
+    margin-top: 2.5em;
+}
+div.ui-datepicker{
+    /* This changes the size of calendar
+          in jquery datapicker. */
+    font-size: 1.5em;
+}
