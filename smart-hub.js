@@ -10,14 +10,14 @@ class App extends React.Component{
             );
         }
         else if(this.state.page === 'Program'){
-            return(<div class="text-center">
+            return(<div className="text-center">
                 <p>Program Page</p>
-                <button class="btn btn-primary btn-lg m-1"
+                <button className="btn btn-primary btn-lg m-1"
                 onClick={() => {this.setState({page:'Home'})}}>Exit</button>
             </div>);
         }
         else if(this.state.page === 'History'){
-            return(<div class="text-center">
+            return(<div className="text-center">
                 <p>History Page</p>
             </div>);
         }

@@ -5,44 +5,54 @@ class HomeMenu extends React.Component{
     }
     handlePowerChange = (x) => {this.setState({power:x});}
     render(){
-        return(<div class="text-center">
-            <h1>Smart Home Hub</h1>
-            <div class="row row-custom1">
-                <div class="col-sm-1"></div>
+        return(<div className="text-center">
+            <h1 className="page-title">Smart Home Hub</h1>
+            <div className="row row-custom1">
+                <div className="col-sm-1"></div>
 
-                <div class="col-sm-3">
-                <button class="btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Set Room<br></br> Temperature</button>
-                <div class="w-100"></div>
-                <button class="btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Set Temperature<br></br> Schedule</button>
-                <div class="w-100"></div>
-                <button class="btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Modify Fridge/<br></br>Freezer Settings</button>
+                <div className="col-sm-3">
+                <button className="home-btn btn btn-primary btn-custom m-4"
+                onClick={() => {this.setState({page:'Program'})}}>Set Room<br/> Temperature</button>
+                <div className="w-100"></div>
+                <button className="home-btn btn btn-primary btn-custom m-4"
+                onClick={() => {this.setState({page:'Program'})}}>Set Temperature<br/> Schedule</button>
+                <div className="w-100"></div>
+                <button className="home-btn btn btn-primary btn-custom m-4"
+                onClick={() => {this.setState({page:'Program'})}}>Modify Fridge/<br/>Freezer Settings</button>
                 </div>
 
-                <div class="col-sm-4">
+                <div className="col-sm-4">
+                    <Clock/>
+                    <div className="w-100"></div>
+                    <div className="home-temp" id="homepage-temp">
+                        <Temp/>
+                        <p id="measurement">&deg;F</p>
+                    </div>
+                    <div className="home-temp" id="homepage-weather">
+                        <Temp/>
+                        <p id="measurement">&deg;F</p>
+                    </div>
                 </div>
 
-                <div class="col-sm-3">
-                <button class="btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Schedule<br></br> Devices</button>
-                <div class="w-100"></div>
-                <button class="btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Garden<br></br> Lighting</button>
-                <div class="w-100"></div>
-                <button class="btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Garden<br></br> Irrigation</button>
+                <div className="col-sm-3">
+                <button className="home-btn btn btn-primary btn-custom m-4"
+                onClick={() => {this.setState({page:'Program'})}}>Schedule<br/> Devices</button>
+                <div className="w-100"></div>
+                <button className="home-btn btn btn-primary btn-custom m-4"
+                onClick={() => {this.setState({page:'Program'})}}>Garden<br/> Lighting</button>
+                <div className="w-100"></div>
+                <button className="home-btn btn btn-primary btn-custom m-4"
+                onClick={() => {this.setState({page:'Program'})}}>Garden<br/> Irrigation</button>
                 </div>
-                <div class="col-sm-1"></div>
+                <div className="col-sm-1"></div>
             </div>
-            <div class="row row-custom">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
-                <button class="btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Check<br></br> Weather</button>
+            <div className="row row-custom">
+            <div className="col-sm-4"></div>
+            <div className="col-sm-4">
+                <button className="home-btn btn btn-primary btn-custom m-4"
+                onClick={() => {this.setState({page:'Program'})}}>Check<br/> Weather</button>
             </div>
-                <div class="col-sm-4">
+                <div className="col-sm-4">
                 <PowerButton power={this.state.power} onPowerChange={this.handlePowerChange} />
                 </div>
             </div>

@@ -1,0 +1,141 @@
+:root { /*constant variables*/
+    --home-background: rgb(10, 24, 40);
+    --home-background2: rgb(10, 24, 40);
+    --wheat: rgb(191, 161, 129); /*default color theme for elements on the page*/
+    --wheat-light: rgb(217, 202, 186);
+    --wheat-faded: rgba(217, 202, 186, 0.542);
+    --home-btn-clr-default: rgb(191, 161, 129);
+    --home-btn-clr-hover: rgb(156, 132, 106);
+    --home-btn-clr-click: rgb(226, 191, 154);
+}
+
+* { /*Default font style for the website*/
+    font-family: "Georgia";
+}
+
+body {
+    background: linear-gradient(to right, var(--home-background), var(--home-background2));
+}
+
+/* Default settings for any title of a page */
+.page-title{
+    font-size:5em;
+    text-shadow: 4px 4px 6px rgba(14, 14, 14, 0.416);
+    background: -webkit-linear-gradient(var(--wheat), #ffffff); /*gradient top-down from default to white*/
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Button settings for Home page */
+.home-btn {
+    background-color: var(--home-btn-clr-default);
+    border-color: var(--home-btn-clr-default);
+    color: rgb(44, 44, 44);    
+}
+.home-btn:hover {
+    background-color: var(--home-btn-clr-hover);
+    border-color: var(--home-btn-clr-hover);
+    font-size: 1.35em;
+    text-shadow: 1px 1px 1px rgb(44, 44, 44); /*text shadow */
+    box-shadow: 1px 2px 2px 3px black; /*give button a shadow when hovering */
+}
+.home-btn:active, .home-btn:focus {
+    background-color: var(--home-btn-clr-click);
+    border-color: var(--home-btn-clr-click);
+}
+.btn-custom{
+    width: 200px;
+    height: 85px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.row-custom1{
+    margin-top: 10px;
+}
+
+.row-custom2{
+    margin-top: 10px;
+}
+
+.col-custom{
+    margin-top: 50px;
+}
+
+.btn-power{
+    border-radius: 20%;
+    height: 100px;
+    width: 100px;
+}
+
+
+
+.large-font{
+    font-size: 6em; 
+    font-weight:bold;
+}
+.small-font{
+    font-size: 1.5em;
+}
+.medium-font{
+    font-size: 3em;
+}
+.minus-button{
+    width: 1.4em;
+    height: 2em; 
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+.plus-button{
+    height: 2em; 
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+#setvalue{
+    width: 2em;
+    height: 1.5em;
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+}
+#power{
+    width:50%
+}
+#powerimage{
+    width:3.5em;
+    height:3.5em;
+}
+.my-top-margin{
+    margin-top: 2.5em;
+}
+div.ui-datepicker{
+    /* This changes the size of calendar
+          in jquery datapicker. */
+    font-size: 1.5em;
+}
+
+#clock-comp {
+    color:var(--wheat-light);
+}
+
+
+.home-temp p {
+    display:inline;
+    margin-right: 0.12em; /*distance between temp value and degF*/
+}
+#homepage-temp { /*indoor temperature div*/
+    color:var(--wheat-light);
+}
+#temp-comp { /*temperature component (integer value)*/
+    font-size: 6em;
+}
+#measurement { /*measurement text (F)*/
+    font-size: 2em;
+    top: 1px;
+}
+#homepage-weather {
+    margin-top:-3em; /*bring closer to indoor temp*/
+    font-size: 0.4em;
+    color: var(--wheat-faded);
+}
