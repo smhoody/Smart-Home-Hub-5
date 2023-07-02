@@ -19,7 +19,7 @@ class PowerButton extends React.Component{
             onClick={this.toggle}><img src="powerbutton.png" width="100" height="100"></img></button>
         }
         else{
-            button = <button class="btn btn-success m-1"
+            button = <button class="btn btn-success m-1 btn-power"
             onClick={this.toggle}><img src="powerbutton.png" width="100" height="100"></img></button>
         }
         return(
@@ -43,7 +43,7 @@ class Clock extends React.Component{
     }
     render(){
         return (
-            <p className="medium-font" >{this.state.date.toLocaleTimeString()}</p>
+            <p className="medium-font clockStyle" >{this.state.date.toLocaleTimeString()}</p>
             
         );
     }
