@@ -15,12 +15,12 @@ class PowerButton extends React.Component{
         const p = this.props.power;
         let button;
         if(p === 0){
-            button = <button class="btn btn-danger m-1 btn-power"
-            onClick={this.toggle}><img src="powerbutton.png" width="100" height="100"></img></button>
+            button = <button className="btn btn-danger m-1 btn-power"
+            onClick={this.toggle}><img src="powerbutton.png" width="75" height="75"></img></button>
         }
         else{
-            button = <button class="btn btn-success m-1 btn-power"
-            onClick={this.toggle}><img src="powerbutton.png" width="100" height="100"></img></button>
+            button = <button className="btn btn-success m-1 btn-power"
+            onClick={this.toggle}><img src="powerbutton.png" width="75" height="75"></img></button>
         }
         return(
             <div>{button}</div>
@@ -43,8 +43,26 @@ class Clock extends React.Component{
     }
     render(){
         return (
-            <p className="medium-font clockStyle" >{this.state.date.toLocaleTimeString()}</p>
+            <p className="medium-font" id="clock-comp">{this.state.date.toLocaleTimeString()}</p>
             
+        );
+    }
+}
+
+class Temp extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {temp: 73};
+    }
+    componentDidMount(){
+        this.timerID = setInterval(() => this.tick(),1000);
+    }
+    componentWillUnmount(){
+        clearInterval(this.timerID);
+    }
+    render(){
+        return (
+            <p id="temp-comp">{this.state.temp.toString()}</p>
         );
     }
 }
