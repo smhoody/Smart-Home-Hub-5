@@ -15,13 +15,13 @@ class HomeMenu extends React.Component{
 
                 <div className="col-sm-3">
                 <button className="home-btn btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Set Room<br/> Temperature</button>
+                onClick={() => {this.toggle('SetRoomTemp')}}>Set Room<br/> Temperature</button>
                 <div className="w-100"></div>
                 <button className="home-btn btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Set Temperature<br/> Schedule</button>
+                onClick={() => {this.toggle('SetTempSchedule')}}>Set Temperature<br/> Schedule</button>
                 <div className="w-100"></div>
                 <button className="home-btn btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Modify Fridge/<br/>Freezer Settings</button>
+                onClick={() => {this.toggle('ModifyFridgeSettings')}}>Modify Fridge/<br/>Freezer Settings</button>
                 </div>
 
                 <div className="col-sm-4">
@@ -39,13 +39,13 @@ class HomeMenu extends React.Component{
 
                 <div className="col-sm-3">
                 <button className="home-btn btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Schedule<br/> Devices</button>
+                onClick={() => {this.toggle('ScheduleDevices')}}>Schedule<br/> Devices</button>
                 <div className="w-100"></div>
                 <button className="home-btn btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Garden<br/> Lighting</button>
+                onClick={() => {this.toggle('GardenLighting')}}>Garden<br/> Lighting</button>
                 <div className="w-100"></div>
                 <button className="home-btn btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Garden<br/> Irrigation</button>
+                onClick={() => {this.toggle('GardenIrrigation')}}>Garden<br/> Irrigation</button>
                 </div>
                 <div className="col-sm-1"></div>
             </div>
@@ -53,7 +53,7 @@ class HomeMenu extends React.Component{
             <div className="col-sm-4"></div>
             <div className="col-sm-4">
                 <button className="home-btn btn btn-primary btn-custom m-4"
-                onClick={() => {this.setState({page:'Program'})}}>Check<br/> Weather</button>
+                onClick={() => {this.toggle('CheckWeather')}}>Check<br/> Weather</button>
             </div>
                 <div className="col-sm-4">
                 <PowerButton power={this.state.power} onPowerChange={this.handlePowerChange} />
