@@ -106,3 +106,16 @@ class Weather extends React.Component {
         );
     }
 }
+
+class ExitButton extends React.Component {
+    constructor(props){
+        super(props);
+    }
+    toggle = (x) => {this.props.menuChange(x);}
+    render(){
+        return(
+            <button className="default-btn btn btn-primary btn-lg m-1"
+                onClick={() => {this.toggle('Home')}}>Exit</button>
+        );
+    }
+}
