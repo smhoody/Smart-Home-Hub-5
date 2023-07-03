@@ -59,7 +59,50 @@ class Temp extends React.Component{
     }
     render(){
         return (
-            <p id="temp-comp">{this.props.temperature}</p>
+            <div>
+                <p id="temp-comp">{this.props.temperature}</p>
+                <p id="measurement">&deg;F</p>
+            </div>
+        );
+    }
+}
+
+class Weather extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {temperature: 70};
+    }
+    componentDidMount(){
+        this.refresher = setInterval(() => this.tick(),2000);
+    }
+    componentWillUnmount(){
+        clearInterval(this.refresher);
+    }
+    getTemperature() {
+        var coords = {latitude:0, longitude:0};
+
+        //get coordinates of city
+        $.getJSON(`https://geocoding-api.open-meteo.com/v1/search?name=${this.props.city}&format=json`, function(data) {
+            coords.latitude = data.results[0].latitude;
+            coords.longitude = data.results[0].longitude;
+        });
+        //get weather information of coords
+        $.getJSON(`https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch`, function(data) {
+            var p = document.getElementById("weather-comp");
+            p.innerHTML = data.current_weather.temperature;
+        });
+    }
+    tick(){
+        this.getTemperature();
+    }
+    render(){
+        return (
+            <div>
+                <p id="weather-comp">{this.state.temperature}</p>
+                <p id="measurement">&deg;F</p>
+                <br/>
+                <p id="weather-location">{this.props.city}</p>
+            </div>
         );
     }
 }

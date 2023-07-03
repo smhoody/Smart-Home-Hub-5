@@ -5,11 +5,19 @@ class HomeMenu extends React.Component{
         // - this.props.temperature
         // - this.props.weather
         // - this.props.power
+        // - this.props.city
         // - this.props.handleTempChange()
         // - this.props.handlePowerChange()
         // - this.props.menuChange()}
+
+        // navigator.geolocation.getCurrentPosition(success);
+        // function success(pos) {
+        //     const coord = pos.coords;
+        //     this.state.location.latitude = coord.latitude;
+        //     this.state.location.longitude = coord.longitude;
+        // }
     }
-    
+
     toggle = (x) => {this.props.menuChange(x);}
     render(){
         return(<div className="home-page text-center">
@@ -31,13 +39,11 @@ class HomeMenu extends React.Component{
                 <div className="col-sm-4">
                     <Clock/>
                     <div className="w-100"></div>
-                    <div className="home-temp" id="homepage-temp">
+                    <div className="temp-comp" id="homepage-temp">
                         <Temp temperature={this.props.temperature} onTempChange={this.handleTempChange}/>
-                        <p id="measurement">&deg;F</p>
                     </div>
-                    <div className="home-temp" id="homepage-weather">
-                        <Temp temperature={this.props.weather} onTempChange={this.handleTempChange}/>
-                        <p id="measurement">&deg;F</p>
+                    <div className="temp-comp" id="homepage-weather">
+                        <Weather city={this.props.city}/>
                     </div>
                 </div>
 

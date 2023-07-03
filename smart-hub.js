@@ -4,19 +4,35 @@ class App extends React.Component{
         this.state = {page:'Home',
                       temperature: 71,
                       weather: 83,
-                      power: 1};
+                      power: 1,
+                      city: "Baltimore",
+                      popup: 0};
     }
     //states and handling needs to be done here otherwise states don't 
     //save when switching pages
     handleMenuChange = (x) => {this.setState({page:x});}
     handlePowerChange = (x) => {this.setState({power:x});}
     handleTempChange = (temp) => {this.setState({temperature:temp});}
+    handlePopupChange = () => {
+        var overlay = document.getElementById("overlay");
+        var popupBox = document.getElementById("cityPopupBox");
+        if (this.state.popup === 0) {
+            overlay.style.display = "block";
+            popupBox.style.display = "block";
+            this.state.popup = 1;
+        } else if (this.state.popup === 1) {
+            overlay.style.display = "none";
+            popupBox.style.display = "none";
+            this.state.popup = 0;
+        }
+    }
     render(){
         if(this.state.page === 'Home'){
             return(
             <HomeMenu temperature={this.state.temperature}
                       power={this.state.power} 
                       weather={this.state.weather}
+                      city={this.state.city}
                       handleTempChange={this.handleTempChange}
                       handlePowerChange={this.handlePowerChange}
                       menuChange={this.handleMenuChange}/>
@@ -66,9 +82,46 @@ class App extends React.Component{
         }
         else if(this.state.page === 'CheckWeather'){
             return(<div className="text-center">
+                <div id="overlay"></div>
                 <h1 className="page-title">Weather</h1>
-                <button className="default-btn btn btn-primary btn-lg m-1"
-                onClick={() => {this.setState({page:'Home'})}}>Exit</button>
+                <div className="row row-custom1">
+                    <div className="col-sm"></div> 
+
+                    <div className="temp-comp col-sm" id="weather-page">
+                        <Weather city={this.state.city}/>
+                    </div>
+
+                    <div className="col-sm"></div>
+
+                </div>
+                <div className="row row-custom">
+                    <div className="col-sm">
+                        <button className="default-btn btn btn-primary btn-lg m-1"
+                        onClick={this.handlePopupChange}>Search City</button>
+                    </div>
+
+                    <div className="col-sm">
+                        <div id="cityPopupBox">
+                            <h2 className="default-text">Search City</h2>
+                            <input id="cityInput" text="Enter city"></input>
+                            <button className="default-btn" id="closeButton" 
+                            onClick={this.handlePopupChange}>Close</button>
+                        </div>
+                    </div>
+                    <div className="col-sm"></div>
+                </div>
+                <div className="row row-custom"></div>
+
+                <div className="row row-custom">
+                    <div className="col-sm"></div>
+
+                    <div className="col-sm">
+                    <button className="default-btn btn btn-primary btn-lg m-1"
+                    onClick={() => {this.setState({page:'Home'})}}>Exit</button>
+                    </div>
+
+                    <div className="col-sm"></div>
+                </div>
             </div>);
         }
     }

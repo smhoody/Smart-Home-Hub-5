@@ -51,6 +51,10 @@ body {
     font-size: 20px;
 }
 
+.default-text {
+    color: var(--wheat-light);
+}
+
 .row-custom1{
     margin-top: 10px;
 }
@@ -120,7 +124,7 @@ div.ui-datepicker{
 }
 
 
-.home-temp p {
+.temp-comp p {
     display:inline;
     margin-right: 0.12em; /*distance between temp value and degF*/
 }
@@ -128,7 +132,13 @@ div.ui-datepicker{
     color:var(--wheat-light);
 }
 #temp-comp { /*temperature component (integer value)*/
+    font-size: 8em;
+}
+#weather-comp {
     font-size: 6em;
+}
+#weather-location {
+    font-size: 3em;
 }
 #measurement { /*measurement text (F)*/
     font-size: 2em;
@@ -138,4 +148,36 @@ div.ui-datepicker{
     margin-top:-3em; /*bring closer to indoor temp*/
     font-size: 0.4em;
     color: var(--wheat-faded);
+}
+#weather-page { /*overwrite faded color for weather on weather page*/
+    color:var(--wheat-light);
+}
+
+/*popup window styling*/
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25); /* change background opacity */
+    display: none;
+    z-index: 9999;
+}
+#cityPopupBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--home-background);
+    padding: 20px;
+    display: none;
+    z-index: 10000;
+}
+#cityPopupBox h2 {
+    margin-top: 0;
+}
+#closeButton {
+    display: block;
+    margin-top: 10px;
 }
