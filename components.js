@@ -52,17 +52,14 @@ class Clock extends React.Component{
 class Temp extends React.Component{
     constructor(props){
         super(props);
-        this.state = {temp: 73};
+        this.handleChange = this.handleChange.bind(this);
     }
-    componentDidMount(){
-        this.timerID = setInterval(() => this.tick(),1000);
-    }
-    componentWillUnmount(){
-        clearInterval(this.timerID);
+    handleChange(e) {
+        this.props.onTempChange(e.target.value);
     }
     render(){
         return (
-            <p id="temp-comp">{this.state.temp.toString()}</p>
+            <p id="temp-comp">{this.props.temperature}</p>
         );
     }
 }

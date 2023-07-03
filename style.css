@@ -28,19 +28,19 @@ body {
 }
 
 /* Button settings for Home page */
-.home-btn {
+.default-btn {
     background-color: var(--home-btn-clr-default);
     border-color: var(--home-btn-clr-default);
     color: rgb(44, 44, 44);    
 }
-.home-btn:hover {
+.default-btn:hover {
     background-color: var(--home-btn-clr-hover);
     border-color: var(--home-btn-clr-hover);
     font-size: 1.35em;
     text-shadow: 1px 1px 1px rgb(44, 44, 44); /*text shadow */
     box-shadow: 1px 2px 2px 3px black; /*give button a shadow when hovering */
 }
-.home-btn:active, .home-btn:focus {
+.default-btn:active, .default-btn:focus {
     background-color: var(--home-btn-clr-click);
     border-color: var(--home-btn-clr-click);
 }
