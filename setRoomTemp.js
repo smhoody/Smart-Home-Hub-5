@@ -5,7 +5,18 @@ class SetRoomTemp extends React.Component {
         <Database PopupChange={this.handlePopupChange}/>
     }
     componentDidMount(){
-        Database.retrieveRoom();
+        var roominfo = Database.retrieveRoom();
+        var rooms;
+
+       for(rooms in roominfo) {
+            var button = document.createElement("button");
+            button.type = "button";
+            button.innerHTML = rooms;
+            button.className = "default-btn btn btn-primary btn-lg m-3 room-btn-custom";
+            button.addEventListener("click", this.handlePopupChange);
+            var container = document.getElementById("roomButtons");
+            container.appendChild(button);
+       }
     }
     handlePopupChange = () => {
         console.log("hi");

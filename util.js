@@ -62,6 +62,8 @@ class Database extends React.Component {
     static retrieveRoom = () => {
         var JSONObject = localStorage.getItem("rooms");
         var JSObject = JSON.parse(JSONObject);
+        return(JSObject);
+        /*
         var rooms;
 
        for(rooms in JSObject) {
@@ -72,7 +74,7 @@ class Database extends React.Component {
             button.onClick = () => {this.popupChange();};
             var container = document.getElementById("roomButtons");
             container.appendChild(button);
-       }
+       }*/
     }
     static cleardb = () => {
         localStorage.clear();
