@@ -114,7 +114,7 @@ class ExitButton extends React.Component {
     toggle = (x) => {this.props.menuChange(x);}
     render(){
         return(
-            <button className="default-btn btn btn-primary btn-lg m-1"
+            <button className="default-btn btn btn-primary btn-lg m-1 exitButton"
                 onClick={() => {this.toggle('Home')}}>Exit</button>
         );
     }

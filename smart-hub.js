@@ -7,6 +7,7 @@ class App extends React.Component{
                       power: 1,
                       city: "Baltimore",
                       popup: 0};
+                      //<Database/>
     }
     //states and handling needs to be done here otherwise states don't 
     //save when switching pages

@@ -4,6 +4,12 @@ class Database extends React.Component {
         // this.db = {rooms:{}};
         localStorage.setItem("rooms", {});
     }
+    componentDidMount(){
+        localStorage.clear();
+    }
+    componentWillUnmount(){
+        localStorage.clear();
+    }
 
     static saveRoom = () => {
         var dbObj = localStorage.getItem("rooms");
@@ -30,13 +36,17 @@ class Database extends React.Component {
         
     }
 
-    static retrieve = (item) => {
+    static retrieveRoom = () => {
         var JSONObject = localStorage.getItem("rooms");
         var JSObject = JSON.parse(JSONObject);
-
+        /*
         var id = item.value;
         if(JSObject[id] != null){
-
         }
+        */
+       return(JSObject);
+    }
+    static cleardb = () => {
+        localStorage.clear();
     }
 }

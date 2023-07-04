@@ -18,18 +18,36 @@ class SetRoomTemp extends React.Component {
         }
     }
     saveRoom = () => {
+        //Database.cleardb();
         Database.saveRoom();
+        this.addButton();
+    }
+    addButton = () => {
+        var roomList = Database.retrieveRoom();
+        var room;
+        for(room in roomList) {
+            var button = document.createElement("button");
+            button.type = "button";
+            button.innerHTML = room;
+            button.className = "default-btn btn btn-primary btn-lg m-3 room-btn-custom";
+            var container = document.getElementById("roomButtons");
+            container.appendChild(button);
+        }
     }
     render(){
         return(
             <div className="text-center">
                 <div className="overlay" id="room-overlay"></div>
                 <div className="row row-custom">
+                <div className="col-sm"></div>
                     <div className="col-sm">
                         <button className="default-btn btn btn-primary btn-lg m-1"
                         onClick={this.handlePopupChange}>Set Room</button>
                     </div>
+                    <div className="col-sm"></div>
+                </div>
 
+                <div className="row row-custom">
                     <div className="col-sm">
                         <div className="popupBox" id="room-popupBox">
                             <h2 className="default-text">Set Room</h2>
@@ -54,6 +72,12 @@ class SetRoomTemp extends React.Component {
                             </div>
                         </div>
                     </div>
+                    <div className="col-sm"></div>
+                </div>
+
+                <div className="row row-custom m-3">
+                    <div className="col-sm"></div>
+                    <div className="col-sm" id="roomButtons"></div>
                     <div className="col-sm"></div>
                 </div>
             </div>
