@@ -19,7 +19,6 @@ class SetRoomTemp extends React.Component {
        }
     }
     handlePopupChange = () => {
-        console.log("hi");
         var overlay = document.getElementById("room-overlay");
         var popupBox = document.getElementById("room-popupBox");
         if (this.state.popup === 0) {
@@ -33,7 +32,6 @@ class SetRoomTemp extends React.Component {
         }
     }
     handlePopupChange2 = () => {
-        console.log("hi");
         var overlay = document.getElementById("rooms-overlay");
         var popupBox = document.getElementById("rooms-popupBox");
         if (this.state.popup === 0) {
@@ -48,6 +46,11 @@ class SetRoomTemp extends React.Component {
     }
     saveRoom = () => {
         Database.saveRoom();
+    }
+    changeText = () => {
+        var val = document.getElementById("tempVal");
+        var newVal = document.getElementById("roomTempInput").value;
+        val.innerHTML = newVal;
     }
     render(){
         return(
@@ -72,7 +75,8 @@ class SetRoomTemp extends React.Component {
                             </div>
                             <div>
                                 <p className="default-text" id="roomTempText">Enter Room Temperature</p>
-                                <input id="roomTempInput" text="Enter Temp"></input>
+                                <p className="default-text" id="tempVal">0</p>
+                                <input type="range" min="0" max="100" className="slider" id="roomTempInput" onChange={this.changeText}/>
                             </div>
                             <div className="row row-custom">
                                 <div className="col-sm">
@@ -97,8 +101,8 @@ class SetRoomTemp extends React.Component {
                         <div className="popupBox" id="rooms-popupBox">
                             <h2 className="default-text">Set Room Temp</h2>
                             <div>
-                                <p className="default-text" id="roomTempText">Enter Room Temperature</p>
-                                <input id="roomsTempInput" text="Enter Temp"></input>
+                                <p className="default-text" id="roomTempText">Set Room Temperature</p>
+                                <input type="range" min="0" max="100" className="slider" id="roomTempInput" onChange={this.changeText}/>
                             </div>
                             <div className="row row-custom">
                                 <div className="col-sm">

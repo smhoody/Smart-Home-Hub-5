@@ -216,6 +216,27 @@ div.ui-datepicker{
     margin-top:10px;
 }
 
+.slider {
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #f1f1f1; /* Grey background */
+    border-radius: 30px;
+    outline: none; /* Remove outline */
+    opacity: 0.8; /* Set transparency (for mouse-over effects on hover) */
+    transition: opacity .2s;
+}
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: var(--wheat);
+    border-radius: 100%;
+}
+
 
 #cityBtn {
     font-size: 3em;
