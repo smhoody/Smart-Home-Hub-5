@@ -2,9 +2,13 @@ class SetRoomTemp extends React.Component {
     constructor(props){
         super(props);
         this.state = {popup:0};
-        <Database/>
+        <Database PopupChange={this.handlePopupChange}/>
+    }
+    componentDidMount(){
+        Database.retrieveRoom();
     }
     handlePopupChange = () => {
+        console.log("hi");
         var overlay = document.getElementById("room-overlay");
         var popupBox = document.getElementById("room-popupBox");
         if (this.state.popup === 0) {
@@ -18,9 +22,7 @@ class SetRoomTemp extends React.Component {
         }
     }
     saveRoom = () => {
-        //Database.cleardb();
         Database.saveRoom();
-        this.addButton();
     }
     addButton = () => {
         var roomList = Database.retrieveRoom();
@@ -77,7 +79,27 @@ class SetRoomTemp extends React.Component {
 
                 <div className="row row-custom m-3">
                     <div className="col-sm"></div>
-                    <div className="col-sm" id="roomButtons"></div>
+                    <div className="col-sm" id="roomButtons">
+                        <div className="overlay" id="rooms-overlay"></div>
+                        <div className="popupBox" id="rooms-popupBox">
+                            <h2 className="default-text">Set Room</h2>
+                            <div>
+                                <p className="default-text" id="roomTempText">Enter Room Temperature</p>
+                                <input id="roomsTempInput" text="Enter Temp"></input>
+                            </div>
+                            <div className="row row-custom">
+                                <div className="col-sm">
+                                    <button className="default-btn-small" id="closeButton" 
+                                    onClick={this.handlePopupChange}>Close</button>
+                                </div>
+                                <div className="col-sm"></div>
+                                <div className="col-sm">
+                                    <button className="default-btn-small" id="enterButton" 
+                                    onClick={(this.handlePopupChange, this.saveRoom)}>Enter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="col-sm"></div>
                 </div>
             </div>
