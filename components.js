@@ -73,23 +73,20 @@ class Weather extends React.Component {
         this.state = {temperature: 70};
     }
     componentDidMount(){
-        this.refresher = setInterval(() => this.tick(),2000);
+        this.getTemperature();
+        this.refresher = setInterval(() => this.tick(),1000);
     }
     componentWillUnmount(){
         clearInterval(this.refresher);
     }
     getTemperature() {
-        var coords = {latitude:0, longitude:0};
-
-        //get coordinates of city
-        $.getJSON(`https://geocoding-api.open-meteo.com/v1/search?name=${this.props.city}&format=json`, function(data) {
-            coords.latitude = data.results[0].latitude;
-            coords.longitude = data.results[0].longitude;
-        });
-        //get weather information of coords
-        $.getJSON(`https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch`, function(data) {
-            var p = document.getElementById("weather-comp");
-            p.innerHTML = data.current_weather.temperature;
+        var cityName = this.props.city;        
+        //get coordinates of city and weather information of coords
+        $.getJSON(`https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&format=json`, function(data) {
+            $.getJSON(`https://api.open-meteo.com/v1/forecast?latitude=${data.results[0].latitude}&longitude=${data.results[0].longitude}&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch`, function(data) {
+                var p = document.getElementById("weather-comp");
+                p.innerHTML = data.current_weather.temperature;
+            });
         });
     }
     tick(){

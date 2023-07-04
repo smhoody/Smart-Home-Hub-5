@@ -170,7 +170,7 @@ div.ui-datepicker{
 .popupBox h2 {
     margin-top: 0;
 }
-#closeButton {
+#closeButton, #enterButton {
     display: block;
     margin-top: 10px;
 }

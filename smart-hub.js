@@ -7,7 +7,6 @@ class App extends React.Component{
                       power: 1,
                       city: "Baltimore",
                       popup: 0};
-                      //<Database/>
     }
     //states and handling needs to be done here otherwise states don't 
     //save when switching pages
@@ -27,7 +26,11 @@ class App extends React.Component{
             this.state.popup = 0;
         }
     }
-
+    handleCityChange = () => {
+        this.handlePopupChange();
+        var cityName = document.getElementById("cityInput").value;
+        this.setState({city:cityName});
+    }
 
     render(){
         if(this.state.page === 'Home'){
@@ -84,7 +87,7 @@ class App extends React.Component{
             </div>);
         }
         else if(this.state.page === 'CheckWeather'){
-            return(<div className="text-center">
+            return(<div className="container text-center">
                 <div className="overlay" id="city-overlay"></div>
                 <h1 className="page-title">Weather</h1>
                 <div className="row row-custom1">
@@ -106,15 +109,15 @@ class App extends React.Component{
                         <div className="popupBox" id="city-popupBox">
                             <h2 className="default-text">Search City</h2>
                             <input id="cityInput" text="Enter Room"></input>
-                            <div className="row row-custom">
+                            <div className="row">
                                 <div className="col-sm">
                                     <button className="default-btn-small" id="closeButton" 
                                     onClick={this.handlePopupChange}>Close</button>
                                 </div>
                                 <div className="col-sm"></div>
                                 <div className="col-sm">
-                                    <button className="default-btn-small" id="cityEnterButton" 
-                                    onClick={(this.handlePopupChange, this.handleSearch)}>Enter</button>
+                                    <button className="default-btn-small" id="enterButton" 
+                                    onClick={this.handleCityChange}>Enter</button>
                                 </div>
                             </div>
                         </div>
