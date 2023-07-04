@@ -14,8 +14,8 @@ class App extends React.Component{
     handlePowerChange = (x) => {this.setState({power:x});}
     handleTempChange = (temp) => {this.setState({temperature:temp});}
     handlePopupChange = () => {
-        var overlay = document.getElementById("overlay");
-        var popupBox = document.getElementById("cityPopupBox");
+        var overlay = document.getElementById("city-overlay");
+        var popupBox = document.getElementById("city-popupBox");
         if (this.state.popup === 0) {
             overlay.style.display = "block";
             popupBox.style.display = "block";
@@ -26,6 +26,8 @@ class App extends React.Component{
             this.state.popup = 0;
         }
     }
+
+
     render(){
         if(this.state.page === 'Home'){
             return(
@@ -82,7 +84,7 @@ class App extends React.Component{
         }
         else if(this.state.page === 'CheckWeather'){
             return(<div className="text-center">
-                <div id="overlay"></div>
+                <div className="overlay" id="city-overlay"></div>
                 <h1 className="page-title">Weather</h1>
                 <div className="row row-custom1">
                     <div className="col-sm"></div> 
@@ -95,22 +97,29 @@ class App extends React.Component{
 
                 </div>
                 <div className="row row-custom">
-                    <div className="col-sm">
-                        <button className="default-btn btn btn-primary btn-lg m-1"
-                        onClick={this.handlePopupChange}>Search City</button>
-                    </div>
+                    <div className="col-sm"></div>
 
                     <div className="col-sm">
-                        <div id="cityPopupBox">
+                    <button className="default-btn btn"
+                        onClick={this.handlePopupChange} id="cityBtn">Search</button>
+                        <div className="popupBox" id="city-popupBox">
                             <h2 className="default-text">Search City</h2>
-                            <input id="cityInput" text="Enter city"></input>
-                            <button className="default-btn" id="closeButton" 
-                            onClick={this.handlePopupChange}>Close</button>
+                            <input id="cityInput" text="Enter Room"></input>
+                            <div className="row row-custom">
+                                <div className="col-sm">
+                                    <button className="default-btn-small" id="closeButton" 
+                                    onClick={this.handlePopupChange}>Close</button>
+                                </div>
+                                <div className="col-sm"></div>
+                                <div className="col-sm">
+                                    <button className="default-btn-small" id="cityEnterButton" 
+                                    onClick={(this.handlePopupChange, this.handleSearch)}>Enter</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="col-sm"></div>
                 </div>
-                <div className="row row-custom"></div>
 
                 <div className="row row-custom">
                     <div className="col-sm"></div>

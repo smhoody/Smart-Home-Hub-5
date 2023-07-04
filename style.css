@@ -1,6 +1,7 @@
 :root { /*constant variables*/
     --home-background: rgb(10, 24, 40);
     --home-background2: rgb(10, 24, 40);
+    --popup-background: rgb(26, 62, 104);
     --wheat: rgb(191, 161, 129); /*default color theme for elements on the page*/
     --wheat-light: rgb(217, 202, 186);
     --wheat-faded: rgba(217, 202, 186, 0.542);
@@ -31,12 +32,14 @@ body {
 .default-btn {
     background-color: var(--home-btn-clr-default);
     border-color: var(--home-btn-clr-default);
+    border-radius: 7%;
     color: rgb(44, 44, 44);    
 }
 .default-btn:hover {
     background-color: var(--home-btn-clr-hover);
     border-color: var(--home-btn-clr-hover);
-    font-size: 1.35em;
+    color: aliceblue;
+    font-size: 1.3em;
     text-shadow: 1px 1px 1px rgb(44, 44, 44); /*text shadow */
     box-shadow: 1px 2px 2px 3px black; /*give button a shadow when hovering */
 }
@@ -50,7 +53,19 @@ body {
     padding: 10px;
     font-size: 20px;
 }
-
+.default-btn-small {
+    background-color: var(--home-btn-clr-default);
+    border-color: var(--home-btn-clr-default);
+    border-radius: 15%;
+    color: rgb(44, 44, 44);
+    font-size: 1em;
+}
+.default-btn-small:hover {
+    background-color: var(--home-btn-clr-default);
+    border-color: var(--home-btn-clr-default);
+    color: aliceblue;
+    text-shadow: 1px 1px 1px rgb(44, 44, 44);
+}
 .default-text {
     color: var(--wheat-light);
 }
@@ -123,6 +138,41 @@ div.ui-datepicker{
     color:var(--wheat-light);
 }
 
+/*popup window styling*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.362); /* change background opacity */
+    display: none;
+    z-index: 9999;
+}
+.popupBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -110%);
+    background-color: var(--popup-background);
+    border-radius: 10%;
+    border: 1px solid #ffffff;
+    padding: 20px;
+    display: none;
+    z-index: 10000;
+}
+.popupBox h2 {
+    margin-top: 0;
+}
+#closeButton {
+    display: block;
+    margin-top: 10px;
+}
+#enterButton{
+    display: block;
+    margin-top: 10px;
+}
+
 
 .temp-comp p {
     display:inline;
@@ -152,36 +202,11 @@ div.ui-datepicker{
 #weather-page { /*overwrite faded color for weather on weather page*/
     color:var(--wheat-light);
 }
+#roomTempText {
+    margin-top:10px;
+}
 
-/*popup window styling*/
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.25); /* change background opacity */
-    display: none;
-    z-index: 9999;
-}
-#cityPopupBox {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--home-background);
-    padding: 20px;
-    display: none;
-    z-index: 10000;
-}
-#cityPopupBox h2 {
-    margin-top: 0;
-}
-#closeButton {
-    display: block;
-    margin-top: 10px;
-}
-#enterButton{
-    display: block;
-    margin-top: 10px;
+
+#cityBtn {
+    font-size: 3em;
 }

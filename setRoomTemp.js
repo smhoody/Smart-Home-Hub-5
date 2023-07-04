@@ -5,8 +5,8 @@ class SetRoomTemp extends React.Component {
         <Database/>
     }
     handlePopupChange = () => {
-        var overlay = document.getElementById("overlay");
-        var popupBox = document.getElementById("cityPopupBox");
+        var overlay = document.getElementById("room-overlay");
+        var popupBox = document.getElementById("room-popupBox");
         if (this.state.popup === 0) {
             overlay.style.display = "block";
             popupBox.style.display = "block";
@@ -18,13 +18,12 @@ class SetRoomTemp extends React.Component {
         }
     }
     saveRoom = () => {
-        //var id = document.getElementById("enterButton").ariaValueMax;
         Database.saveRoom();
     }
     render(){
         return(
             <div className="text-center">
-                <div id="overlay"></div>
+                <div className="overlay" id="room-overlay"></div>
                 <div className="row row-custom">
                     <div className="col-sm">
                         <button className="default-btn btn btn-primary btn-lg m-1"
@@ -32,17 +31,24 @@ class SetRoomTemp extends React.Component {
                     </div>
 
                     <div className="col-sm">
-                        <div id="cityPopupBox">
+                        <div className="popupBox" id="room-popupBox">
                             <h2 className="default-text">Set Room</h2>
-                            <input id="cityInput" text="Enter Room"></input>
+                            <div>
+                                <p className="default-text">Enter Room Name</p>
+                                <input id="roomNameInput" text="Enter Room"></input>
+                            </div>
+                            <div>
+                                <p className="default-text" id="roomTempText">Enter Room Temperature</p>
+                                <input id="roomTempInput" text="Enter Temp"></input>
+                            </div>
                             <div className="row row-custom">
                                 <div className="col-sm">
-                                    <button className="default-btn" id="closeButton" 
+                                    <button className="default-btn-small" id="closeButton" 
                                     onClick={this.handlePopupChange}>Close</button>
                                 </div>
                                 <div className="col-sm"></div>
                                 <div className="col-sm">
-                                    <button className="default-btn" id="enterButton" 
+                                    <button className="default-btn-small" id="enterButton" 
                                     onClick={(this.handlePopupChange, this.saveRoom)}>Enter</button>
                                 </div>
                             </div>

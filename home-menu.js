@@ -9,13 +9,6 @@ class HomeMenu extends React.Component{
         // - this.props.handleTempChange()
         // - this.props.handlePowerChange()
         // - this.props.menuChange()}
-
-        // navigator.geolocation.getCurrentPosition(success);
-        // function success(pos) {
-        //     const coord = pos.coords;
-        //     this.state.location.latitude = coord.latitude;
-        //     this.state.location.longitude = coord.longitude;
-        // }
     }
 
     toggle = (x) => {this.props.menuChange(x);}
