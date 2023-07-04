@@ -63,18 +63,6 @@ class Database extends React.Component {
         var JSONObject = localStorage.getItem("rooms");
         var JSObject = JSON.parse(JSONObject);
         return(JSObject);
-        /*
-        var rooms;
-
-       for(rooms in JSObject) {
-            var button = document.createElement("button");
-            button.type = "button";
-            button.innerHTML = rooms;
-            button.className = "default-btn btn btn-primary btn-lg m-3 room-btn-custom";
-            button.onClick = () => {this.popupChange();};
-            var container = document.getElementById("roomButtons");
-            container.appendChild(button);
-       }*/
     }
     static cleardb = () => {
         localStorage.clear();

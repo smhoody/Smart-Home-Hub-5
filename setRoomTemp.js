@@ -11,9 +11,9 @@ class SetRoomTemp extends React.Component {
        for(rooms in roominfo) {
             var button = document.createElement("button");
             button.type = "button";
-            button.innerHTML = rooms;
+            button.innerHTML = `${rooms} <br> Temp: ${roominfo[rooms].temp}`;
             button.className = "default-btn btn btn-primary btn-lg m-3 room-btn-custom";
-            button.addEventListener("click", this.handlePopupChange);
+            button.addEventListener("click", this.handlePopupChange2);
             var container = document.getElementById("roomButtons");
             container.appendChild(button);
        }
@@ -32,20 +32,22 @@ class SetRoomTemp extends React.Component {
             this.state.popup = 0;
         }
     }
+    handlePopupChange2 = () => {
+        console.log("hi");
+        var overlay = document.getElementById("rooms-overlay");
+        var popupBox = document.getElementById("rooms-popupBox");
+        if (this.state.popup === 0) {
+            overlay.style.display = "block";
+            popupBox.style.display = "block";
+            this.state.popup = 1;
+        } else if (this.state.popup === 1) {
+            overlay.style.display = "none";
+            popupBox.style.display = "none";
+            this.state.popup = 0;
+        }
+    }
     saveRoom = () => {
         Database.saveRoom();
-    }
-    addButton = () => {
-        var roomList = Database.retrieveRoom();
-        var room;
-        for(room in roomList) {
-            var button = document.createElement("button");
-            button.type = "button";
-            button.innerHTML = room;
-            button.className = "default-btn btn btn-primary btn-lg m-3 room-btn-custom";
-            var container = document.getElementById("roomButtons");
-            container.appendChild(button);
-        }
     }
     render(){
         return(
@@ -93,7 +95,7 @@ class SetRoomTemp extends React.Component {
                     <div className="col-sm" id="roomButtons">
                         <div className="overlay" id="rooms-overlay"></div>
                         <div className="popupBox" id="rooms-popupBox">
-                            <h2 className="default-text">Set Room</h2>
+                            <h2 className="default-text">Set Room Temp</h2>
                             <div>
                                 <p className="default-text" id="roomTempText">Enter Room Temperature</p>
                                 <input id="roomsTempInput" text="Enter Temp"></input>
@@ -101,12 +103,12 @@ class SetRoomTemp extends React.Component {
                             <div className="row row-custom">
                                 <div className="col-sm">
                                     <button className="default-btn-small" id="closeButton" 
-                                    onClick={this.handlePopupChange}>Close</button>
+                                    onClick={this.handlePopupChange2}>Close</button>
                                 </div>
                                 <div className="col-sm"></div>
                                 <div className="col-sm">
                                     <button className="default-btn-small" id="enterButton" 
-                                    onClick={(this.handlePopupChange, this.saveRoom)}>Enter</button>
+                                    onClick={(this.handlePopupChange2, this.saveRoom)}>Enter</button>
                                 </div>
                             </div>
                         </div>
