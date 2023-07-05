@@ -1,8 +1,8 @@
 class FridgeSettings extends React.Component {
     constructor(props){
         super(props);
-        this.state = {popup:0, fridgeTemp:30, freezerTemp:0, brightness:70};
-        <Database PopupChange={this.handlePopupChange}/>
+        this.state = {popup:0, fridgeTemp:30, freezerTemp:0, brightness:70, dispenser:"Water"};
+        <Database/>
     }
     handleFreezerPopupChange = () => {this.state.popup = Util.handlePopupChange("room-overlay", "freezer-popupBox", this.state.popup);}
     // handleFreezerPopupChange = () => {
@@ -75,6 +75,34 @@ class FridgeSettings extends React.Component {
         var newVal = document.getElementById("lightingInput").value;
         val.innerHTML = `${newVal}%`;
     }
+    confirmFreezer = () => {
+        var val = document.getElementById("freezer-btn");
+        var newVal = document.getElementById("freezerTempInput").value;
+        this.state.fridgeTemp = newVal;
+        val.innerHTML = `${newVal} \u00B0`;
+    }
+    confirmFridge = () => {
+        var val = document.getElementById("fridge-btn");
+        var newVal = document.getElementById("fridgeTempInput").value;
+        this.state.fridgeTemp = newVal;
+        val.innerHTML = `${newVal} \u00B0`;
+    }
+    confirmLighting = () => {
+        var val = document.getElementById("lighting-btn");
+        var newVal = document.getElementById("lightingInput").value;
+        this.state.brightness = newVal;
+        val.innerHTML = `${newVal}%`;
+    }
+    confirmDispenser = () => {
+        var val = document.getElementById("water-btn");
+        if(document.getElementById("WaterInput").checked) {
+            this.state.dispenser = "Water";
+            val.innerHTML = `Water`;
+        } else {
+            this.state.dispenser = "Ice";
+            val.innerHTML = `Ice`;
+        }
+    }
     render(){
         return(
             <div className="text-center">
@@ -83,12 +111,12 @@ class FridgeSettings extends React.Component {
                     <div className="col-sm"></div>
                     <div className="col-sm">
                         <button className="default-btn btn btn-primary btn-lg m-3 btn-custom"
-                            onClick={this.handleFreezerPopupChange}>Freezer Temp</button>
+                            onClick={this.handleFreezerPopupChange}>Freezer Temp<br/><p id="freezer-btn">{this.state.freezerTemp}&deg;</p></button>
                         <div className="popupBox" id="freezer-popupBox">
                             <h2 className="default-text">Change Freezer Temperature</h2>
                             <div>
                                 <p className="default-text" id="roomTempText">Enter Freezer Temperature</p>
-                                <p className="default-text" id="freezerTempVal">0</p>
+                                <p className="default-text" id="freezerTempVal">{this.state.freezerTemp}</p>
                                 <input type="range" min="0" max="100" className="slider" id="freezerTempInput" onChange={this.changeFreezerText}/>
                             </div>
                             <div className="row row-custom">
@@ -99,7 +127,7 @@ class FridgeSettings extends React.Component {
                                 <div className="col-sm"></div>
                                 <div className="col-sm">
                                     <button className="default-btn-small" id="enterButton" 
-                                    onClick={(this.handleFreezerPopupChange)}>Enter</button>
+                                    onClick={(this.handleFreezerPopupChange, this.confirmFreezer)}>Enter</button>
                                 </div>
                             </div>
                         </div>
@@ -107,13 +135,13 @@ class FridgeSettings extends React.Component {
                     <div className="col-sm"></div>
                     <div className="col-sm">
                         <button className="default-btn btn btn-primary btn-lg m-3 btn-custom"
-                            onClick={this.handleFridgePopupChange}>Fridge Temp</button>
+                            onClick={this.handleFridgePopupChange}>Fridge Temp<br/><p id="fridge-btn">{this.state.fridgeTemp}&deg;</p></button>
                         <div className="overlay" id="fridge-overlay"></div>
                             <div className="popupBox" id="fridge-popupBox">
                             <h2 className="default-text">Change Fridge Temperature</h2>
                             <div>
                                 <p className="default-text" id="roomTempText">Enter Fridge Temperature</p>
-                                <p className="default-text" id="fridgeTempVal">this.state.fridgeTemp</p>
+                                <p className="default-text" id="fridgeTempVal">{this.state.fridgeTemp}</p>
                                 <input type="range" min="0" max="100" className="slider" id="fridgeTempInput" onChange={this.changeFridgeText}/>
                             </div>
                             <div className="row row-custom">
@@ -124,7 +152,7 @@ class FridgeSettings extends React.Component {
                                 <div className="col-sm"></div>
                                 <div className="col-sm">
                                     <button className="default-btn-small" id="enterButton" 
-                                    onClick={(this.handleFridgePopupChange)}>Enter</button>
+                                    onClick={(this.handleFridgePopupChange, this.confirmFridge)}>Enter</button>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +163,7 @@ class FridgeSettings extends React.Component {
                     <div className="col-sm"></div>
                     <div className="col-sm">
                         <button className="default-btn btn btn-primary btn-lg m-3 btn-custom"
-                            onClick={this.handleWaterPopupChange}>Water/Ice Maker</button>
+                            onClick={this.handleWaterPopupChange}>Water/Ice Maker<br/><p id="water-btn">{this.state.dispenser}</p></button>
                         <div className="overlay" id="water-overlay"></div>
                             <div className="popupBox" id="water-popupBox">
                             <h2 className="default-text">Change Water Dispenser</h2>
@@ -154,7 +182,7 @@ class FridgeSettings extends React.Component {
                                 <div className="col-sm"></div>
                                 <div className="col-sm">
                                     <button className="default-btn-small" id="enterButton" 
-                                    onClick={(this.handleWaterPopupChange)}>Enter</button>
+                                    onClick={(this.handleWaterPopupChange, this.confirmDispenser)}>Enter</button>
                                 </div>
                             </div>
                         </div>
@@ -162,13 +190,13 @@ class FridgeSettings extends React.Component {
                     <div className="col-sm"></div>
                     <div className="col-sm">
                         <button className="default-btn btn btn-primary btn-lg m-3 btn-custom"
-                            onClick={this.handleLightingPopupChange}>Lighting</button>
+                            onClick={this.handleLightingPopupChange}>Lighting<br/><p id="lighting-btn">{this.state.brightness}%</p></button>
                         <div className="overlay" id="lighting-overlay"></div>
                             <div className="popupBox" id="lighting-popupBox">
                             <h2 className="default-text">Change Brightness</h2>
                             <div>
                                 <p className="default-text" id="roomTempText">Enter Fridge Brightness</p>
-                                <p className="default-text" id="lightingVal">70%</p>
+                                <p className="default-text" id="lightingVal">{this.state.brightness}%</p>
                                 <input type="range" min="0" max="100" className="slider" id="lightingInput" onChange={this.changeLightingText}/>
                             </div>
                             <div className="row row-custom">
@@ -179,7 +207,7 @@ class FridgeSettings extends React.Component {
                                 <div className="col-sm"></div>
                                 <div className="col-sm">
                                     <button className="default-btn-small" id="enterButton" 
-                                    onClick={(this.handleLightingPopupChange)}>Enter</button>
+                                    onClick={(this.handleLightingPopupChange, this.confirmLighting)}>Enter</button>
                                 </div>
                             </div>
                         </div>
