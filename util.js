@@ -26,6 +26,7 @@ class Database extends React.Component {
 
         // this will not allow the user to overwrite
         if (action === "add") { //if room already exists
+            console.log("hi");
             var button = document.createElement("button");
             button.type = "button";
             button.innerHTML = `${roomName} <br> Temp: ${db[roomName].temp}`;
@@ -47,6 +48,21 @@ class Database extends React.Component {
             container.appendChild(button);
         }
         
+    }
+    static updateRoom = () => {
+        var dbObj = localStorage.getItem("rooms");
+        var db = JSON.parse(dbObj);
+
+        var roomName = document.getElementById("roomNameInput").value;
+        var roomTemp = document.getElementById("roomTempInput").value;
+        
+        // this will overwrite if the entry exists
+        // db[roomName] = {temp:roomTemp};
+        // var JSONObject = JSON.stringify(db);
+        // localStorage.setItem("rooms", JSONObject);
+        db[roomName] = {temp:roomTemp};
+        var JSONObject = JSON.stringify(db);
+        localStorage.setItem("rooms", JSONObject);
     }
 
     static retrieveRoom = () => {

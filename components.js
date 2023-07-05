@@ -16,11 +16,11 @@ class PowerButton extends React.Component{
         let button;
         if(p === 0){
             button = <button className="btn btn-danger m-1 btn-power"
-            onClick={this.toggle}><img src="/resources/powerbutton.png" width="75" height="75"></img></button>
+            onClick={this.toggle}><img src="resources/powerbutton.png" width="75" height="75"></img></button>
         }
         else{
             button = <button className="btn btn-success m-1 btn-power"
-            onClick={this.toggle}><img src="/resources/powerbutton.png" width="75" height="75"></img></button>
+            onClick={this.toggle}><img src="resources/powerbutton.png" width="75" height="75"></img></button>
         }
         return(
             <div>{button}</div>

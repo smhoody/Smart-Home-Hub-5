@@ -241,3 +241,7 @@ div.ui-datepicker{
 #cityBtn {
     font-size: 3em;
 }
+
+#roomName{
+    font-weight: bold;
+}
