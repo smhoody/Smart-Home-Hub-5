@@ -83,6 +83,7 @@ class App extends React.Component{
         else if(this.state.page === 'GardenIrrigation'){
             return(<div className="text-center">
                 <h1 className="page-title">Garden Irrigation</h1>
+                <GardenIrrigation/>
                 <button className="default-btn btn btn-primary btn-lg m-1"
                 onClick={() => {this.setState({page:'Home'})}}>Exit</button>
             </div>);

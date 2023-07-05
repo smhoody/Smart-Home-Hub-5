@@ -249,3 +249,10 @@ div.ui-datepicker{
 #roomName{
     font-weight: bold;
 }
+
+.tempValue {
+    font-size: 1.9em;
+}
+.tempText {
+    margin-bottom: 2px;
+}
