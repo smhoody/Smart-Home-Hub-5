@@ -4,58 +4,62 @@ class FridgeSettings extends React.Component {
         this.state = {popup:0, fridgeTemp:30, freezerTemp:0, brightness:70};
         <Database PopupChange={this.handlePopupChange}/>
     }
-    handleFreezerPopupChange = () => {
-        var overlay = document.getElementById("room-overlay");
-        var popupBox = document.getElementById("freezer-popupBox");
-        if (this.state.popup === 0) {
-            overlay.style.display = "block";
-            popupBox.style.display = "block";
-            this.state.popup = 1;
-        } else if (this.state.popup === 1) {
-            overlay.style.display = "none";
-            popupBox.style.display = "none";
-            this.state.popup = 0;
-        }
-    }
-    handleFridgePopupChange = () => {
-        var overlay = document.getElementById("fridge-overlay");
-        var popupBox = document.getElementById("fridge-popupBox");
-        if (this.state.popup === 0) {
-            overlay.style.display = "block";
-            popupBox.style.display = "block";
-            this.state.popup = 1;
-        } else if (this.state.popup === 1) {
-            overlay.style.display = "none";
-            popupBox.style.display = "none";
-            this.state.popup = 0;
-        }
-    }
-    handleLightingPopupChange = () => {
-        var overlay = document.getElementById("lighting-overlay");
-        var popupBox = document.getElementById("lighting-popupBox");
-        if (this.state.popup === 0) {
-            overlay.style.display = "block";
-            popupBox.style.display = "block";
-            this.state.popup = 1;
-        } else if (this.state.popup === 1) {
-            overlay.style.display = "none";
-            popupBox.style.display = "none";
-            this.state.popup = 0;
-        }
-    }
-    handleWaterPopupChange = () => {
-        var overlay = document.getElementById("water-overlay");
-        var popupBox = document.getElementById("water-popupBox");
-        if (this.state.popup === 0) {
-            overlay.style.display = "block";
-            popupBox.style.display = "block";
-            this.state.popup = 1;
-        } else if (this.state.popup === 1) {
-            overlay.style.display = "none";
-            popupBox.style.display = "none";
-            this.state.popup = 0;
-        }
-    }
+    handleFreezerPopupChange = () => {this.state.popup = Util.handlePopupChange("room-overlay", "freezer-popupBox", this.state.popup);}
+    // handleFreezerPopupChange = () => {
+    //     var overlay = document.getElementById("room-overlay");
+    //     var popupBox = document.getElementById("freezer-popupBox");
+    //     if (this.state.popup === 0) {
+    //         overlay.style.display = "block";
+    //         popupBox.style.display = "block";
+    //         this.state.popup = 1;
+    //     } else if (this.state.popup === 1) {
+    //         overlay.style.display = "none";
+    //         popupBox.style.display = "none";
+    //         this.state.popup = 0;
+    //     }
+    // }
+    handleFridgePopupChange = () => {this.state.popup = Util.handlePopupChange("fridge-overlay", "fridge-popupBox", this.state.popup);}
+    // handleFridgePopupChange = () => {
+    //     var overlay = document.getElementById("fridge-overlay");
+    //     var popupBox = document.getElementById("fridge-popupBox");
+    //     if (this.state.popup === 0) {
+    //         overlay.style.display = "block";
+    //         popupBox.style.display = "block";
+    //         this.state.popup = 1;
+    //     } else if (this.state.popup === 1) {
+    //         overlay.style.display = "none";
+    //         popupBox.style.display = "none";
+    //         this.state.popup = 0;
+    //     }
+    // }
+    handleLightingPopupChange = () => {this.state.popup = Util.handlePopupChange("lighting-overlay", "lighting-popupBox", this.state.popup);}
+    // handleLightingPopupChange = () => {
+    //     var overlay = document.getElementById("lighting-overlay");
+    //     var popupBox = document.getElementById("lighting-popupBox");
+    //     if (this.state.popup === 0) {
+    //         overlay.style.display = "block";
+    //         popupBox.style.display = "block";
+    //         this.state.popup = 1;
+    //     } else if (this.state.popup === 1) {
+    //         overlay.style.display = "none";
+    //         popupBox.style.display = "none";
+    //         this.state.popup = 0;
+    //     }
+    // }
+    handleWaterPopupChange = () => {this.state.popup = Util.handlePopupChange("water-overlay", "water-popupBox", this.state.popup);}
+    // handleWaterPopupChange = () => {
+    //     var overlay = document.getElementById("water-overlay");
+    //     var popupBox = document.getElementById("water-popupBox");
+    //     if (this.state.popup === 0) {
+    //         overlay.style.display = "block";
+    //         popupBox.style.display = "block";
+    //         this.state.popup = 1;
+    //     } else if (this.state.popup === 1) {
+    //         overlay.style.display = "none";
+    //         popupBox.style.display = "none";
+    //         this.state.popup = 0;
+    //     }
+    // }
     changeFreezerText = () => {
         var val = document.getElementById("freezerTempVal");
         var newVal = document.getElementById("freezerTempInput").value;

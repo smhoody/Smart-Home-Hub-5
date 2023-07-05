@@ -27,7 +27,7 @@ class TemperatureSchedule extends React.Component {
         this.state.popup = Util.handlePopupChange("temp-sched-overlay", "temp-sched-popupBox", this.state.popup, roomName);
     }
 
-    updateRoom = (roomName) => {
+    updateRoom = () => {
         this.state.popup = Util.handlePopupChange("temp-sched-overlay", "temp-sched-popupBox", this.state.popup, this.current_room);
         Database.updateRoomSchedule(this.current_room, this.state.from, this.state.to);
     }
