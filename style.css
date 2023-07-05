@@ -157,11 +157,11 @@ div.ui-datepicker{
 }
 .popupBox {
     position: fixed;
-    top: 70%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -110%);
     background-color: var(--popup-background);
-    border-radius: 10%;
+    border-radius: 30px;
     border: 1px solid #ffffff;
     padding: 20px;
     display: none;

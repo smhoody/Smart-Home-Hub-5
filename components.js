@@ -116,3 +116,50 @@ class ExitButton extends React.Component {
         );
     }
 }
+
+
+class Calendar extends React.Component {
+    constructor(props){
+        super(props);
+        //inherited properties:
+        // - ID of date input tag (a pair of date components must have same ID)
+        // - current date
+        // - range type ("start" or "end")
+        // - handleChange()
+    }
+    componentDidMount() {
+        var componentID = "#" + this.props.ID + this.props.rangeType;
+        $(componentID).datepicker();
+        $.datepicker.setDefaults({
+            dateFormat:"D, d MM", //day name short, day number, month name full
+            showAnim:"scale" //type of animation for opening calendar
+        });
+        $(componentID).datepicker("setDate", this.props.current);
+        $(componentID).attr('readonly', true);
+        $(componentID).on("change", this.change);
+    }
+    componentWillUnmount() {
+        
+    }
+    change = () => {
+        var componentID = "#" + this.props.ID + this.props.rangeType;
+        var currentDate = $(componentID).datepicker("getDate");
+
+        if (this.props.rangeType == "start") { //if this is the Start date component
+            var endComponentID = "#"+this.props.ID+"end"; // set the minimum date of the end component to this date
+            $(endComponentID).datepicker("option", "minDate", currentDate);
+        } else if (this.props.rangeType == "end") { //if this is the End date component
+            var endComponentID = "#"+this.props.ID+"start"; // set the maximum date of the start component to this date
+            $(endComponentID).datepicker("option", "maxDate", currentDate);
+        }
+        
+        this.props.handleChange(currentDate);
+    }
+    render() {
+      return (
+        <div>
+          <input type="text" id={this.props.ID+this.props.rangeType} className="small-font" />
+        </div>
+      );
+    }
+  }

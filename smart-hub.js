@@ -54,6 +54,7 @@ class App extends React.Component{
         else if(this.state.page === 'SetTempSchedule'){
             return(<div className="text-center">
                 <h1 className="page-title">Temperature Schedule</h1>
+                <TemperatureSchedule tempChange={this.handleTempChange}/>
                 <button className="default-btn btn btn-primary btn-lg m-1"
                 onClick={() => {this.setState({page:'Home'})}}>Exit</button>
             </div>);

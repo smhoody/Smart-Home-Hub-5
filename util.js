@@ -19,7 +19,10 @@ class Database extends React.Component {
         // db[roomName] = {temp:roomTemp};
         // var JSONObject = JSON.stringify(db);
         // localStorage.setItem("rooms", JSONObject);
-        db[roomName] = {temp:roomTemp};
+        db[roomName] = {temp:roomTemp,
+                        schedule_start:0,
+                        schedule_end:0};
+
         var JSONObject = JSON.stringify(db);
         localStorage.setItem("rooms", JSONObject);
 
@@ -56,8 +59,24 @@ class Database extends React.Component {
         // db[roomName] = {temp:roomTemp};
         // var JSONObject = JSON.stringify(db);
         // localStorage.setItem("rooms", JSONObject);
-        db[roomName] = {temp:roomTemp};
+        db[roomName].temp = roomTemp;
         var JSONObject = JSON.stringify(db);
+        localStorage.setItem("rooms", JSONObject);
+    }
+
+    //update the room temperature schedule
+    //params: 
+    // - roomName: String (name/key of room)
+    // - from: Date (start date of schedule)
+    // - to: Date (end date of schedule) 
+    static updateRoomSchedule(roomName, from, to) {
+        var dbObj = localStorage.getItem("rooms");
+        var db = JSON.parse(dbObj);
+
+        //update schedules
+        db[roomName].schedule_start = from;
+        db[roomName].schedule_end = to;
+        var JSONObject = JSON.stringify(db);        
         localStorage.setItem("rooms", JSONObject);
     }
 
@@ -68,5 +87,42 @@ class Database extends React.Component {
     }
     static cleardb = () => {
         localStorage.clear();
+    }
+}
+
+
+class Util {
+    constructor(){}
+
+    /*Shows or hides a popup window
+    params:
+     - overlayID: String (id of overlay div in the rendered page)
+     - popupID: String (id of popup div)
+     - stateValue: Int (the state of the popup, 0=off, 1=on
+     - roomName: String (name of the room if passed) 
+    */ 
+    static handlePopupChange(overlayID, popupID, stateValue, roomName=null) {
+        var overlay = document.getElementById(overlayID);
+        var popupBox = document.getElementById(popupID);
+
+        if (stateValue === 0) {
+            //if state is currently off, turn on (show popup)
+            overlay.style.display = "block";
+            popupBox.style.display = "block";
+            stateValue = 1;
+            if (roomName){ //if room name was passed
+                var val = document.getElementById("roomName");
+                var newVal = roomName;
+                val.style.fontSize = "1.3em";
+                val.innerHTML = "Room: " + newVal;
+            }
+        } else if (stateValue === 1) {
+            //if state is on, turn off (hide popup)
+            overlay.style.display = "none";
+            popupBox.style.display = "none";
+            stateValue = 0;
+        }
+
+        return stateValue;
     }
 }

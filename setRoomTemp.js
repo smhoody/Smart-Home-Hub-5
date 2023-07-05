@@ -6,9 +6,8 @@ class SetRoomTemp extends React.Component {
     }
     componentDidMount(){
         var roominfo = Database.retrieveRoom();
-        var rooms;
 
-       for(rooms in roominfo) {
+       for(var rooms in roominfo) {
             var button = document.createElement("button");
             console.log(rooms);
             button.type = "button";
