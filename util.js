@@ -4,6 +4,7 @@ class Database extends React.Component {
         this.state = {popup:0};
         localStorage.setItem("rooms", {});
         localStorage.setItem("lawnAreas", {});
+        localStorage.setItem("fridgeSettings", {});
     }
 
     static saveRoom = () => {
@@ -150,6 +151,35 @@ class Database extends React.Component {
         if (JSObject === null) {
             JSObject = {};
         }
+        return(JSObject);
+    }
+
+    static saveSettings(fridgeTemp, freezerTemp, brightness, dispenser) {
+        var dbObj = localStorage.getItem("fridgeSettings");
+        var db = JSON.parse(dbObj);
+        if (db === null) //if the database hasn't been created yet 
+            db = {};
+
+        //db["settings"] = {FridgeTemp:fridgeTemp, FreezerTemp:freezerTemp, Brightness:brightness, Dispenser:dispenser};
+        db["fridgeTemp"] = {setting:fridgeTemp};
+        var JSONObject = JSON.stringify(db);
+        localStorage.setItem("fridgeSettings", JSONObject);
+
+        db["freezerTemp"] = {setting:freezerTemp};
+        var JSONObject = JSON.stringify(db);
+        localStorage.setItem("fridgeSettings", JSONObject);
+
+        db["brightness"] = {setting:brightness};
+        var JSONObject = JSON.stringify(db);
+        localStorage.setItem("fridgeSettings", JSONObject);
+
+        db["dispenser"] = {setting:dispenser};
+        var JSONObject = JSON.stringify(db);
+        localStorage.setItem("fridgeSettings", JSONObject);
+    }
+    static retrieveSettings() {
+        var JSONObject = localStorage.getItem("fridgeSettings");
+        var JSObject = JSON.parse(JSONObject);
         return(JSObject);
     }
 

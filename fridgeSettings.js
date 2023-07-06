@@ -4,6 +4,26 @@ class FridgeSettings extends React.Component {
         this.state = {popup:0, fridgeTemp:30, freezerTemp:0, brightness:70, dispenser:"Water"};
         <Database/>
     }
+    componentDidMount() {
+        var settings = Database.retrieveSettings();
+        if(settings != null){
+            for(var name of Object.keys(settings)) {
+                if(name == "fridgeTemp"){
+                    this.updateFridge(settings[name].setting);
+                } else if(name == "freezerTemp"){
+                    this.updateFreezer(settings[name].setting);
+                } else if(name == "brightness"){
+                    this.updateBrightness(settings[name].setting);
+                } else if(name == "dispenser"){
+                    this.updateDispenser(settings[name].setting);
+                }
+            }
+        }
+        console.log(this.state.freezerTemp);
+    }
+    componentWillUnmount(){
+        Database.saveSettings(this.state.fridgeTemp, this.state.freezerTemp, this.state.brightness, this.state.dispenser);
+    }
     handleFreezerPopupChange = () => {this.state.popup = Util.handlePopupChange("room-overlay", "freezer-popupBox", this.state.popup);}
     // handleFreezerPopupChange = () => {
     //     var overlay = document.getElementById("room-overlay");
@@ -102,6 +122,34 @@ class FridgeSettings extends React.Component {
             this.state.dispenser = "Ice";
             val.innerHTML = `Ice`;
         }
+    }
+    updateFridge = (temp) => {
+        this.state.fridgeTemp = temp;
+        var val = document.getElementById("fridgeTempVal");
+        var btnVal = document.getElementById("fridge-btn");
+        val.innerHTML = temp;
+        btnVal.innerHTML = temp;
+    }
+    updateFreezer = (temp) => {
+        this.state.freezerTemp = temp;
+        var val = document.getElementById("freezerTempVal");
+        var btnVal = document.getElementById("freezer-btn");
+        val.innerHTML = temp;
+        btnVal.innerHTML = temp;
+    }
+    updateBrightness = (temp) => {
+        this.state.brightness = temp;
+        var val = document.getElementById("lightingVal");
+        var btnVal = document.getElementById("lighting-btn");
+        val.innerHTML = temp;
+        btnVal.innerHTML = `${temp}%`;
+    }
+    updateDispenser = (temp) => {
+        this.state.dispenser = temp;
+        //var val = document.getElementById("lightingVal");
+        var btnVal = document.getElementById("water-btn");
+        //val.innerHTML = temp;
+        btnVal.innerHTML = temp;
     }
     render(){
         return(
