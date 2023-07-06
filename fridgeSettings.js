@@ -19,7 +19,7 @@ class FridgeSettings extends React.Component {
                 }
             }
         }
-        console.log(this.state.freezerTemp);
+        //console.log(this.state.freezerTemp);
     }
     componentWillUnmount(){
         Database.saveSettings(this.state.fridgeTemp, this.state.freezerTemp, this.state.brightness, this.state.dispenser);
@@ -98,7 +98,7 @@ class FridgeSettings extends React.Component {
     confirmFreezer = () => {
         var val = document.getElementById("freezer-btn");
         var newVal = document.getElementById("freezerTempInput").value;
-        this.state.fridgeTemp = newVal;
+        this.state.freezerTemp = newVal;
         val.innerHTML = `${newVal} \u00B0`;
     }
     confirmFridge = () => {
@@ -127,15 +127,15 @@ class FridgeSettings extends React.Component {
         this.state.fridgeTemp = temp;
         var val = document.getElementById("fridgeTempVal");
         var btnVal = document.getElementById("fridge-btn");
-        val.innerHTML = temp;
-        btnVal.innerHTML = temp;
+        val.innerHTML = `${temp} \u00B0`;
+        btnVal.innerHTML = `${temp} \u00B0`;
     }
     updateFreezer = (temp) => {
         this.state.freezerTemp = temp;
         var val = document.getElementById("freezerTempVal");
         var btnVal = document.getElementById("freezer-btn");
-        val.innerHTML = temp;
-        btnVal.innerHTML = temp;
+        val.innerHTML = `${temp} \u00B0`;
+        btnVal.innerHTML = `${temp} \u00B0`;
     }
     updateBrightness = (temp) => {
         this.state.brightness = temp;
