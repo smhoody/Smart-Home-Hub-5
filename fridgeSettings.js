@@ -19,7 +19,6 @@ class FridgeSettings extends React.Component {
                 }
             }
         }
-        //console.log(this.state.freezerTemp);
     }
     componentWillUnmount(){
         Database.saveSettings(this.state.fridgeTemp, this.state.freezerTemp, this.state.brightness, this.state.dispenser);
