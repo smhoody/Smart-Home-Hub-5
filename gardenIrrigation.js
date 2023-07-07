@@ -74,7 +74,7 @@ class GardenIrrigation extends React.Component {
             var checkbox_label_id_set = "#water-status-text-set";
             var checkbox_id_add = "#water-status-add";
             var checkbox_id_set = "#water-status-set";
-            var ON_class = "form-check-label default-checkbox-label checkbox-label-on";
+            var ON_class = "form-check-label checkbox-label-on";
             var OFF_class = "form-check-label checkbox-label-off";
             var on_msg = "Water On";
             var off_msg = "Water Off";
@@ -167,9 +167,9 @@ class GardenIrrigation extends React.Component {
                             <div className="col-sm">
                                 <div className="form-check form-switch form-check-inline">
                                   <input className="form-check-input default-checkbox" 
-                                  type="checkbox" role="switch" id="water-status"/>
+                                  type="checkbox" role="switch" id="water-status-add"/>
                                   <label className="form-check-label checkbox-label-off" 
-                                  htmlFor="water-status" id="water-status-text-add">Water Off</label>
+                                  htmlFor="water-status-add" id="water-status-text-add">Water Off</label>
                                 </div>
                             </div>
                         </div>

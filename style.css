@@ -79,6 +79,8 @@ body {
     border-radius: 15%;
     color: rgb(44, 44, 44);
     font-size: 1em;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
 }
 .default-btn-small:hover {
     background-color: var(--home-btn-clr-default);

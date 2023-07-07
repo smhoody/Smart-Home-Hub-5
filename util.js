@@ -371,14 +371,19 @@ class Util {
      * @param {String} textID ID of lighting <p> tag to be changed
      * @param {String} valueID ID of <input> field 
      * @param {String} bulbID ID light bulg <img> tag (optional)
+     * @returns `String` value of input field
      */
     static changeLighting(textID, valueID, bulbID="") {
         var val = document.getElementById(textID);
-        var newVal = document.getElementById(valueID).value;
+        var newValElement = document.getElementById(valueID);
+        var newVal = 0;
+        if (newValElement != null) {newVal = newValElement.value;}
+
         var bulb = document.getElementById(bulbID);
         //adjust light bulb opacity according to slider (with slight bias)
         if (bulb != null) {bulb.style.opacity=`${parseInt(newVal)*0.9}%`;}
         val.innerHTML = `${newVal}%`;
+        return newVal;
     }
 
 

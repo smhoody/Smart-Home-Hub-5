@@ -72,29 +72,16 @@ class GardenLighting extends React.Component {
         this.setState({to:date});
     }
     changeLightingText = () => {
-        var val = document.getElementById("start-lightingVal-add");
-        var newVal = document.getElementById("start-lightingInput-add").value;
-        val.innerHTML = `${newVal}%`;
-        //this.state.startLight = newVal;
+        Util.changeLighting("start-lightingVal-add", "start-lightingInput-add", "start-lightImg-add");
     }
     changeLightingText2 = () => {
-        var val = document.getElementById("end-lightingVal-add");
-        var newVal = document.getElementById("end-lightingInput-add").value;
-        val.innerHTML = `${newVal}%`;
-        //this.state.endLight = newVal;
+        Util.changeLighting("end-lightingVal-add", "end-lightingInput-add", "end-lightImg-add");
     }
     changeLightingText3 = () => {
-        var val = document.getElementById("start-lightingVal-set");
-        var newVal = document.getElementById("start-lightingInput-set").value;
-        //this.state.startLight = newVal;
-        val.innerHTML = `${newVal}%`;
-        //this.state.startLight = newVal;
+        Util.changeLighting("start-lightingVal-set", "start-lightingInput-set", "start-lightImg-set");
     }
     changeLightingText4 = () => {
-        var val = document.getElementById("end-lightingVal-set");
-        var newVal = document.getElementById("end-lightingInput-set").value;
-        val.innerHTML = `${newVal}%`;
-        //this.state.endLight = newVal;
+        Util.changeLighting("end-lightingVal-set", "end-lightingInput-set", "end-lightImg-set");
     }
 
     render(){
@@ -183,15 +170,14 @@ class GardenLighting extends React.Component {
                             rangeType="end" handleChange={this.changeEndDate}/>
                         </div>
                         <div className="row row-custom">
-                            <div className="col-sm">
-                                <button className="default-btn-small" id="closeButton" 
-                                onClick={this.handlePopup}>Close</button>
-                            </div>
                             <div className="col-sm"></div>
                             <div className="col-sm">
-                                <button className="default-btn-small" id="enterButton" 
+                                <button className="default-btn-small d-inline" id="closeButton" 
+                                onClick={this.handlePopup}>Close</button>
+                                <button className="default-btn-small d-inline" id="enterButton" 
                                 onClick={this.saveLawnArea}>Enter</button>
                             </div>
+                            <div className="col-sm"></div>
                         </div>
                     </div>
                 </div>
@@ -209,7 +195,7 @@ class GardenLighting extends React.Component {
                                 <p className="default-text">Start Light Intensity</p>
                                 <div className="col-sm default-inline">
                                     {/* LIGHT BULB - use this ID for changeLighting() */}
-                                    <img className="bulb" src="resources/bulb.png" id="end-lightImg-set"></img> 
+                                    <img className="bulb" src="resources/bulb.png" id="start-lightImg-set"></img> 
                                     {/* LIGHTING VALUE - use this ID for changeLighting() */}
                                     <p className="default-text settingValue" id="start-lightingVal-set">{this.state.start_brightness}%</p>
                                 </div>
@@ -240,15 +226,14 @@ class GardenLighting extends React.Component {
                             rangeType="end" handleChange={this.changeEndDate}/>
                         </div>
                         <div className="row row-custom">
-                            <div className="col-sm">
-                                <button className="default-btn-small" id="closeButton" 
-                                onClick={this.handlePopupSet}>Close</button>
-                            </div>
                             <div className="col-sm"></div>
                             <div className="col-sm">
-                                <button className="default-btn-small" id="enterButton" 
+                                <button className="default-btn-small d-inline" id="closeButton" 
+                                onClick={this.handlePopupSet}>Close</button>
+                                <button className="default-btn-small d-inline" id="enterButton" 
                                 onClick={this.updateLawnArea}>Enter</button>
                             </div>
+                            <div className="col-sm"></div>
                         </div>
                     </div>
                 </div>
