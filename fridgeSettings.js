@@ -188,9 +188,9 @@ class FridgeSettings extends React.Component {
                             <div className="popupBox" id="lighting-popupBox">
                             <h2 className="default-text">Change Brightness</h2>
                             <div className="col-sm default-inline">
-                                {/* LIGHT BULB - use ID for changeLighting() */}
+                                {/* LIGHT BULB - use this ID for changeLighting() */}
                                 <img className="bulb" src="resources/bulb.png" id="fridge-lightImg"></img> 
-                                {/* LIGHTING VALUE - use ID for changeLighting() */}
+                                {/* LIGHTING VALUE - use this ID for changeLighting() */}
                                 <p className="default-text settingValue" id="fridge-lightingVal">{this.state.brightness}%</p>
                             </div>
                                 <input type="range" min="0" max="100" className="slider" id="fridge-lightingInput" onChange={this.changeLightingText}/>

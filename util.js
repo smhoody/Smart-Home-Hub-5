@@ -12,7 +12,7 @@ class Database extends React.Component {
     static getDB(key) {
         var db = null;
         var dbObj = localStorage.getItem(key);
-        if (dbObj != null) db = JSON.parse(dbObj);
+        db = JSON.parse(dbObj);
 
         //if db isn't null, return db, else return empty object 
         return (db ? db : {}); 
@@ -56,7 +56,8 @@ class Database extends React.Component {
         // Warning: the buttons added depend on the overlay and popup IDs for the page!!
         var button = document.createElement("button");
         button.type = "button";
-        button.innerHTML = `<strong>${roomName}</strong> <br> Temp: ${db[roomName].temp}`;
+        button.innerHTML = `<strong>${roomName}</strong> <br> Temp: ${roomTemp}`;
+        button.id = roomName;
         button.className = "default-btn btn btn-primary btn-lg m-3 room-btn-custom";
         button.addEventListener("click", () => {
             //Warning: change these values if IDs of divs in page change
@@ -118,31 +119,64 @@ class Database extends React.Component {
     
 
     /** Save lawn area data to local storage
-     * @param {String} areaName 
-     * @param {Date} from 
-     * @param {Date} to 
-     * @param {String} overlayID 
-     * @param {String} popupID 
+     * @param {String} areaName name of lawn area
+     * @param {Date} from start date of schedule
+     * @param {Date} to end date of schedule
+     * @param {String} type type of status/schedule (e.g. "water" or "lights")
+     * @param {String} overlayID html ID of the overlay for the page
+     * @param {String} popupID html ID of the popup for the page
      */
-    static saveLawnArea(areaName, from, to, overlayID, popupID) {
+    static saveLawnArea(areaName, from, to, type, overlayID, popupID) {
         var db = this.getDB("lawnAreas");
+        var buttonText = "";
 
-        var lawnWaterStatus = Util.getLawnStatus("water-status");
+        //default lawn values
+        var w_status = "Off";
+        var w_start = "";
+        var w_end = "";
+        var l_start_status = 0;
+        var l_end_status = 0;
+        var l_start = "";
+        var l_end = "";
 
-        db[areaName] = { water_status:lawnWaterStatus,
-                              water_start:from,
-                                water_end:to,
-                            lights_status:"Off",
-                             lights_start:"",
-                               lights_end:""};
+        switch (type) { //check which type of lawn data is being received
+            
+            //data is from Garden Irrigation page
+            case "water": w_status = Util.getCheckboxStatus("water-status");
+                          w_start = from;
+                          w_end = to;
+                          buttonText = `<strong>${areaName}</strong> 
+                                        <br> Sprinklers: ${w_status}`;
+                          break;
 
-        var JSONObject = JSON.stringify(db);
-        localStorage.setItem("lawnAreas", JSONObject);
+            //data is from Garden Lighting page
+            case "lights": l_start_status = parseInt(Util.getInputValue("start-lightingInput-add"));
+                           l_end_status = parseInt(Util.getInputValue("end-lightingInput-add"));
+                           l_start = from;
+                           l_end = to;
+                           //check if either start/end date is above 0. Lights are on if either value is >0
+                           var status = ((l_start_status + l_end_status) ? "On" : "Off");
+                           buttonText = `<strong>${areaName}</strong> 
+                                         <br> Lights: ${status}`;
+                           break;
+            default: break;
+        }
+
+        //save lawn data
+        db[areaName] = {       water_status: w_status,
+                                water_start: w_start,
+                                  water_end: w_end,
+                        lights_start_status: l_start_status,
+                          lights_end_status: l_end_status,
+                               lights_start: l_start,
+                                 lights_end: l_end};
+
+        this.saveDB(db, "lawnAreas");
 
         var button = document.createElement("button");
         button.type = "button";
-        button.innerHTML = `${areaName} <br> Sprinklers: ${db[areaName].water_status} 
-                                        <br> Lights: ${db[areaName].lights_status}`;
+        button.innerHTML = buttonText;
+        button.id = areaName;
         button.className = "default-btn btn btn-primary btn-lg m-3 lawn-btn-custom";
         button.addEventListener("click", () => {
             var overlay = document.getElementById(overlayID);
@@ -166,33 +200,41 @@ class Database extends React.Component {
     * @param {String} areaName name/key of lawn area
     * @param {Date} from start date of schedule
     * @param {Date} to end date of schedule 
-    * @param {Boolean} status status of the type (0 for Off or 1 for On)
-    * @param {String} type type of schedule ("water" or "lighting")
+    * @param {Array<Int>} values array of statuses (e.g. [0,1] 0=Off,1 for On)
+    * @param {String} type type of schedule ("water" or "lights")
     */
-    static updateAreaSchedule(areaName, from, to, status, type) {
+    static updateAreaSchedule(areaName, from, to, values, type) {
         var db = this.getDB("lawnAreas");
+        var buttonText = "";        
         
-        //convert status bool to string
-        status = (status ? "On" : "Off");
         //update schedule for water or lighting
         switch (type) {
-            case "water":    
+            case "water":  
+                //for water type, values is only 1 element [0] or [1] 
+                //convert status bool to string
+                var status = (values[0] ? "On" : "Off");
                 db[areaName].water_status = status;
                 db[areaName].water_start = from;
                 db[areaName].water_end = to; 
+                buttonText = `<strong>${areaName}</strong> <br> Sprinklers: ${status}`;
                 break;
 
-            case "lighting": 
-                db[areaName].lights_status = status;
+            case "lights": 
+                //for lighting type, values is 2 elements [{0-100}, {0-100}]
+                db[areaName].lights_start_status = values[0];
+                db[areaName].lights_end_status = values[1];
                 db[areaName].lights_start = from;
                 db[areaName].lights_end = to;
+                //check if either start/end date is above 0. Lights are on if either value is >0
+                var status = ((values[0] + values[1]) ? "On" : "Off");
+                buttonText = `<strong>${areaName}</strong> <br> Lights: ${status}`;
                 break;
 
             default: break;
         }
 
         var areaButtonElement = document.getElementById(areaName);
-        areaButtonElement.innerHTML = `<strong>${areaName}</strong> <br> Sprinklers: ${status}`;
+        areaButtonElement.innerHTML = buttonText;
         this.saveDB(db, "lawnAreas");
     }
     
@@ -207,6 +249,7 @@ class Database extends React.Component {
     static saveSettings(fridgeTemp, freezerTemp, brightness, dispenser) {
         var dbObj = localStorage.getItem("fridgeSettings");
         var db = JSON.parse(dbObj);
+        console.log("frid: " +db);
         if (db === null) //if the database hasn't been created yet 
             db = {};
 
@@ -314,12 +357,11 @@ class Util {
      * @param {String} statusID html id of the checkbox
      * @returns `String` "Off" or "On" according to the status of the checkbox
     */
-    static getLawnStatus(statusID) {
+    static getCheckboxStatus(statusID) {
         var lawnStatusObject = document.getElementById(statusID);
         var lawnStatus = "Off";
         if (lawnStatusObject != null) {
-            if (lawnStatusObject.checked) {lawnStatus="On";}
-            else {lawnStatus="Off";}
+            return (lawnStatusObject.checked ? "On" : "Off");
         }
         return lawnStatus;
     }

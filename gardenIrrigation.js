@@ -43,17 +43,16 @@ class GardenIrrigation extends React.Component {
     
     saveLawnArea = () => {
         var lawnAreaName = document.getElementById("areaNameInput").value;
-        Database.saveLawnArea(lawnAreaName, this.state.from, this.state.to, this.state.popupOverlayID_add, this.state.popupBoxID_add);
+        Database.saveLawnArea(lawnAreaName, this.state.from, this.state.to, "water", this.state.popupOverlayID_add, this.state.popupBoxID_add);
         this.handlePopup();
     }
     updateLawnArea = () => {
         this.state.popup = Util.handlePopupChange(this.state.popupOverlayID_set, 
                                                   this.state.popupBoxID_set, 
-                                                  this.state.popup, 
-                                                  this.state.current_area);
+                                                  this.state.popup);
         var checkBoxElem = document.getElementById("water-status-set");
         this.state.current_status = checkBoxElem.checked;
-        Database.updateAreaSchedule(this.state.current_area, this.state.from, this.state.to, this.state.current_status, "water");
+        Database.updateAreaSchedule(this.state.current_area, this.state.from, this.state.to, [this.state.current_status], "water");
     }
 
     changeStartDate = (date) => {
@@ -210,7 +209,7 @@ class GardenIrrigation extends React.Component {
                                   <input className="form-check-input default-checkbox" 
                                   type="checkbox" role="switch" id="water-status-set"/>
                                   <label className="form-check-label checkbox-label-off" 
-                                  htmlFor="water-status" id="water-status-text-set">Water Off</label>
+                                  htmlFor="water-status-set" id="water-status-text-set">Water Off</label>
                                 </div>
                             </div>
                         </div>
