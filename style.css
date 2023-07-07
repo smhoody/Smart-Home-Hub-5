@@ -116,11 +116,11 @@ body {
 
 .default-checkbox {
     font-size:2em;
-    background-color: var(--wheat);
+    background-color: var(--wheat-light);
     border: 1px solid var(--wheat-faded-light);
 }
 .default-checkbox:checked {
-    background-color: var(--wheat-light);
+    background-color: var(--wheat);
 }
 
 .default-checkbox:focus {
