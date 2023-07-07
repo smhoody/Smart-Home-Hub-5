@@ -12,12 +12,12 @@ class ScheduleDevices extends React.Component {
                       space:`\u3000`};
 
     }
-    //on mount, build buttons for all rooms
+    //on mount, build buttons for all devices
     componentDidMount() {
         var areas = Database.retrieveDevices();
 
         for (var areaName of Object.keys(areas)) {
-            //check if either start/end date is above 0. Lights are on if either value is >0
+            //check if either start/end date is above 0.
             //var status = ((areas[areaName].lights_start_status + areas[areaName].lights_end_status) ? "On" : "Off");
             var button = document.createElement("button");
             button.type = "button";
@@ -38,7 +38,7 @@ class ScheduleDevices extends React.Component {
     }
 
     /**
-     * Save a new lawn area to local storage from "Add Lawn Area" button
+     * Save a new device to local storage from "Add device" button
      */
     saveDevices = () => {
         var lawnAreaName = document.getElementById("areaNameInput-lights").value;
@@ -47,7 +47,7 @@ class ScheduleDevices extends React.Component {
     }
 
     /** 
-     * Update local storage with data from editing a lawn area
+     * Update local storage with data from editing a device
      */
     updateDevices = () => {
         this.state.popup = Util.handlePopupChange(this.state.popupOverlayID_set, 

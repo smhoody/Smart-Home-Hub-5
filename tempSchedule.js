@@ -4,7 +4,8 @@ class TemperatureSchedule extends React.Component {
         this.state = {popup:0,
                       from: new Date(),
                       to: new Date(),
-                      current_room:""};
+                      current_room:"", 
+                      currTemp:0};
         <Database PopupChange={this.handlePopupChange}/>
 
     }
@@ -17,14 +18,16 @@ class TemperatureSchedule extends React.Component {
             button.type = "button";
             button.innerHTML = `${name} <br> Temp: ${rooms[name].temp}`;
             button.className = "default-btn btn btn-primary btn-lg m-3 room-btn-custom";
-            button.addEventListener("click", this.handlePopup.bind(null, name));
+            button.addEventListener("click", this.handlePopup.bind(null, name, rooms[name].temp));
             var container = document.getElementById("temp-sched-buttons");
             container.appendChild(button);
         }
     }
-    handlePopup = (roomName) => {
+    handlePopup = (roomName, roomTemp) => {
         this.current_room = roomName;
+
         this.state.popup = Util.handlePopupChange("temp-sched-overlay", "temp-sched-popupBox", this.state.popup, roomName);
+        this.updateCurrTemp(roomTemp);
     }
 
     updateRoom = () => {
@@ -37,6 +40,16 @@ class TemperatureSchedule extends React.Component {
     }
     changeEndDate = (date) => {
         this.setState({to:date});
+    }
+
+    updateCurrTemp = (roomTemp) => {
+        this.state.currTemp = roomTemp;
+        var val = document.getElementById("curr-temp");
+        val.innerHTML = `${roomTemp} \u00b0`;
+    }
+
+    changeText = () => {
+        Util.changeText("temp-val-add", "room-temp-input-add", "temp-color");
     }
 
     render(){
@@ -70,6 +83,26 @@ class TemperatureSchedule extends React.Component {
                         <div className="default-text" id="roomName"></div>
                     </div>
                     <div className="row row-custom">
+                        <div className="row row-custom">
+                            <div className="col-sm">
+                                <div>
+                                    <p className="default-text tempText" id="roomTempText">Current Room Temperature</p>
+                                    <div className="tempValback col-sm-5">
+                                        <p className="default-text tempValue" id="curr-temp">{this.state.currTemp}&deg;</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-sm"></div>
+                            <div className="col-sm">
+                                <div>
+                                    <p className="default-text tempText" id="roomTempText">Enter new Room Temperature</p>
+                                    <div className="tempValback col-sm-5">
+                                        <p className="default-text tempValue" id="temp-val-add">50&deg;</p>
+                                    </div>
+                                    <input type="range" min="50" max="100" className="slider" id="room-temp-input-add" onChange={this.changeText}/>
+                                </div>
+                            </div>
+                        </div>
                         <div className="col-sm">
                             {/* TODO: add current schedule (if any), add scheduled temperature value*/}
                             <p className="default-text" id="tempScheduleFromText">From</p>

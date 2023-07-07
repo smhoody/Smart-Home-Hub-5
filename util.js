@@ -286,7 +286,7 @@ class Database extends React.Component {
      */
     static saveDevices(device, from, to, overlayID, popupID) {
         var db = this.getDB("devices");
-        var buttonText = "";
+        //var buttonText = "";
 
         //default lawn values
         var w_status = "Off";
