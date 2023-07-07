@@ -2,37 +2,64 @@ class Database extends React.Component {
     constructor(props) {
         super(props);
         this.state = {popup:0};
-        localStorage.setItem("rooms", {});
-        localStorage.setItem("lawnAreas", {});
-        localStorage.setItem("fridgeSettings", {});
     }
 
-    static saveRoom = () => {
-        var dbObj = localStorage.getItem("rooms");
-        var db = JSON.parse(dbObj);
-        if (db === null) //if the database hasn't been created yet 
-            db = {};
 
-        var roomName = document.getElementById("roomNameInput").value;
-        var roomTemp = document.getElementById("roomTempInput").value;
-        
-        // this will overwrite if the entry exists
-        // db[roomName] = {temp:roomTemp};
-        // var JSONObject = JSON.stringify(db);
-        // localStorage.setItem("rooms", JSONObject);
+    /** Returns local storage for given key
+     * @param {String} key local storage key
+     * @returns `Object` local storage object for given key
+     */
+    static getDB(key) {
+        var db = null;
+        var dbObj = localStorage.getItem(key);
+        if (dbObj != null) db = JSON.parse(dbObj);
+
+        //if db isn't null, return db, else return empty object 
+        return (db ? db : {}); 
+    }
+
+    /**Saves database object to local storage key
+     * @param {Object} db database object (e.g. rooms{}, lawnAreas{})
+     * @param {String} key key for local storage (e.g. "rooms", "lawnAreas")
+     * @returns `Bool` status of the saving to local storage
+     */
+    static saveDB(db, key) {
+        var JSONObject = JSON.stringify(db);
+        if (JSONObject != null) {
+            localStorage.setItem(key, JSONObject);
+            return true;
+        } else {return false;}
+    }
+
+    /** Save room info to local storage
+     * @param {String} roomNameID html ID of the input field for room name 
+     * @param {String} tempValueID html ID of the input slider for room temperature
+     */
+    static saveRoom(roomNameID, tempValueID) {
+        //get values from HTML input fields 
+        var roomName = Util.getInputValue(roomNameID);
+        var roomTemp = Util.getInputValue(tempValueID);
+
+        //Important: RETURN from function if ID of either room name or value is not found
+        if (roomName === "" || roomTemp === "") {return;} 
+
+        var db = this.getDB("rooms");
+
         db[roomName] = {temp:roomTemp,
-                        schedule_start:new Date(),
-                        schedule_end:new Date()};
+                        schedule_start:"",
+                        schedule_end:""};
 
+        //save to local storage
         var JSONObject = JSON.stringify(db);
         localStorage.setItem("rooms", JSONObject);
 
-        // this will not allow the user to overwrite
+        // Warning: the buttons added depend on the overlay and popup IDs for the page!!
         var button = document.createElement("button");
         button.type = "button";
-        button.innerHTML = `${roomName} <br> Temp: ${db[roomName].temp}`;
+        button.innerHTML = `<strong>${roomName}</strong> <br> Temp: ${db[roomName].temp}`;
         button.className = "default-btn btn btn-primary btn-lg m-3 room-btn-custom";
         button.addEventListener("click", () => {
+            //Warning: change these values if IDs of divs in page change
             var overlay = document.getElementById("rooms-overlay");
             var popupBox = document.getElementById("rooms-popupBox");
             if (this.state.popup === 0) {
@@ -49,21 +76,24 @@ class Database extends React.Component {
         container.appendChild(button);
         
     }
-    static updateRoom = () => {
-        var dbObj = localStorage.getItem("rooms");
-        var db = JSON.parse(dbObj);
 
-        var roomName = document.getElementById("roomNameInput").value;
-        var roomTemp = document.getElementById("roomTempInput").value;
-        
-        // this will overwrite if the entry exists
-        // db[roomName] = {temp:roomTemp};
-        // var JSONObject = JSON.stringify(db);
-        // localStorage.setItem("rooms", JSONObject);
-        db[roomName].temp = roomTemp;
-        var JSONObject = JSON.stringify(db);
-        localStorage.setItem("rooms", JSONObject);
+
+    static updateRoom(roomName, roomTempInput) {
+        var db = this.getDB("rooms");
+
+        var roomTemp = Util.getInputValue(roomTempInput); //get temp from input tag
+
+        //if input field value was found and proper room name, save to database
+        if (roomName && roomTemp) {
+            db[roomName].temp = roomTemp;
+        }
+
+        var roomButtonElement = document.getElementById(roomName);
+        roomButtonElement.innerHTML = `<strong>${roomName}</strong> <br> Temp: ${roomTemp}`;
+
+        this.saveDB(db,"rooms");
     }
+
 
     //update the room temperature schedule
     //params: 
@@ -71,8 +101,7 @@ class Database extends React.Component {
     // - from: Date (start date of schedule)
     // - to: Date (end date of schedule) 
     static updateRoomSchedule(roomName, from, to) {
-        var dbObj = localStorage.getItem("rooms");
-        var db = JSON.parse(dbObj);
+        var db = this.getDB("rooms");
 
         //update schedules
         db[roomName].schedule_start = from;
@@ -86,27 +115,35 @@ class Database extends React.Component {
         var JSObject = JSON.parse(JSONObject);
         return(JSObject);
     }
+    
 
+    /** Save lawn area data to local storage
+     * @param {String} areaName 
+     * @param {Date} from 
+     * @param {Date} to 
+     * @param {String} overlayID 
+     * @param {String} popupID 
+     */
+    static saveLawnArea(areaName, from, to, overlayID, popupID) {
+        var db = this.getDB("lawnAreas");
 
-    static saveLawnArea = (areaName, from, to, overlayID, popupID) => {
-        var dbObj = localStorage.getItem("lawnAreas");
-        var db = JSON.parse(dbObj);
-        if (db === null) //if the database hasn't been created yet 
-            db = {};
+        var lawnWaterStatus = Util.getLawnStatus("water-status");
 
-        var lawnStatus = Util.getLawnStatus();;
-
-        db[areaName] = {status:lawnStatus,
-                        schedule_start:from,
-                        schedule_end:to};
+        db[areaName] = { water_status:lawnWaterStatus,
+                              water_start:from,
+                                water_end:to,
+                            lights_status:"Off",
+                             lights_start:"",
+                               lights_end:""};
 
         var JSONObject = JSON.stringify(db);
         localStorage.setItem("lawnAreas", JSONObject);
 
         var button = document.createElement("button");
         button.type = "button";
-        button.innerHTML = `${areaName} <br> Status: ${db[areaName].temp}`;
-        button.className = "default-btn btn btn-primary btn-lg m-3 room-btn-custom";
+        button.innerHTML = `${areaName} <br> Sprinklers: ${db[areaName].water_status} 
+                                        <br> Lights: ${db[areaName].lights_status}`;
+        button.className = "default-btn btn btn-primary btn-lg m-3 lawn-btn-custom";
         button.addEventListener("click", () => {
             var overlay = document.getElementById(overlayID);
             var popupBox = document.getElementById(popupID);
@@ -122,36 +159,49 @@ class Database extends React.Component {
         });
         var container = document.getElementById("garden-sched-buttons");
         container.appendChild(button);
-
     }
 
-    //update the garden irrigation schedule
-    //params: 
-    // - areaName: String (name/key of lawn area)
-    // - status: Boolean (state of water irrigation, true=on, false=off)
-    // - from: Date (start date of schedule)
-    // - to: Date (end date of schedule) 
-    static updateAreaSchedule(areaName, from, to) {
-        var dbObj = localStorage.getItem("lawnAreas");
-        var db = JSON.parse(dbObj);
+
+   /** Update garden schedule
+    * @param {String} areaName name/key of lawn area
+    * @param {Date} from start date of schedule
+    * @param {Date} to end date of schedule 
+    * @param {Boolean} status status of the type (0 for Off or 1 for On)
+    * @param {String} type type of schedule ("water" or "lighting")
+    */
+    static updateAreaSchedule(areaName, from, to, status, type) {
+        var db = this.getDB("lawnAreas");
         
-        var lawnStatus = Util.getLawnStatus();
+        //convert status bool to string
+        status = (status ? "On" : "Off");
+        //update schedule for water or lighting
+        switch (type) {
+            case "water":    
+                db[areaName].water_status = status;
+                db[areaName].water_start = from;
+                db[areaName].water_end = to; 
+                break;
 
-        //update schedules
-        db[areaName].status = lawnStatus;
-        db[areaName].schedule_start = from;
-        db[areaName].schedule_end = to;
-        var JSONObject = JSON.stringify(db);        
-        localStorage.setItem("lawnAreas", JSONObject);
-    }
+            case "lighting": 
+                db[areaName].lights_status = status;
+                db[areaName].lights_start = from;
+                db[areaName].lights_end = to;
+                break;
 
-    static retrieveLawnAreas() {
-        var JSONObject = localStorage.getItem("lawnAreas");
-        var JSObject = JSON.parse(JSONObject);
-        if (JSObject === null) {
-            JSObject = {};
+            default: break;
         }
-        return(JSObject);
+
+        var areaButtonElement = document.getElementById(areaName);
+        areaButtonElement.innerHTML = `<strong>${areaName}</strong> <br> Sprinklers: ${status}`;
+        this.saveDB(db, "lawnAreas");
+    }
+    
+    /**Return lawn area data
+     * @returns `Object` (e.g.: {*lawn name*: {water_status:"", water_start:""...}})
+     * Object = { } if no lawn area data has been created
+     */
+    static retrieveLawnAreas() {
+        return(this.getDB("lawnAreas"));
     }
 
     static saveSettings(fridgeTemp, freezerTemp, brightness, dispenser) {
@@ -192,13 +242,13 @@ class Database extends React.Component {
 class Util {
     constructor(){}
 
-    /*Shows or hides a popup window
-    params:
-     - overlayID: String (id of overlay div in the rendered page)
-     - popupID: String (id of popup div)
-     - stateValue: Int (the state of the popup, 0=off, 1=on
-     - roomName: String (name of the room if passed) 
-    */ 
+    /** Displays or hides a popup window
+     * @param {String} overlayID id of overlay div in the rendered page
+     * @param {String} popupID id of popup div
+     * @param {Int} stateValue the state of the popup, 0=hidden, 1=display
+     * @param {String} type (optional) type of page the button is for (e.g. "room", "lawn")
+     * @returns `Int` state value of the popup (0=hidden, 1=display)
+     */
     static handlePopupChange(overlayID, popupID, stateValue, roomName=null) {
         var overlay = document.getElementById(overlayID);
         var popupBox = document.getElementById(popupID);
@@ -220,24 +270,103 @@ class Util {
             popupBox.style.display = "none";
             stateValue = 0;
         }
-
         return stateValue;
     }
 
-    static changeText(textID, valueID) {
+
+   /** Changes a tag's inner HTML
+    * @param {String} textID html ID of the p tag that is to be changed
+    * @param {String} valueID html ID of the input tag that is to be read 
+    * @param {String} type type of input value (e.g. "temp-color", "temp", "brightness")
+    * @returns `String` value of input tag passed to this function
+    */
+    static changeText(textID, valueID, type="") {
         var val = document.getElementById(textID);
-        var newVal = document.getElementById(valueID).value;
-        val.innerHTML = newVal;
+        if (val == null) {return;} //if text not found, nothing can happen
+
+        var newValElement = document.getElementById(valueID);
+        var newVal = "";
+        if (newValElement != null) {newVal = newValElement.value;}
+        //if no input was found, value will be empty
+        var output = newVal;
+        switch (type) { 
+            //if temperature color, change color to represent slider value (high=red, low=blue)
+            case "temp-color": val.style.color = `rgb(${output*2.55}, 0, ${255-output*2.55})`; 
+                               output += "&deg;"; //add degree symbol             
+                               break;
+            case "temp-fridge": val.style.color = `rgb(${output*2.55}, 180, ${255-output*2.55})`; 
+                                output += "&deg;"; //add degree symbol             
+                                break;
+            //temp value but no color change
+            case "temp": output += "&deg;"; break; //add degree symbol     
+            //if brightness, add percent symbol
+            case "brightness": output += "%"; break;
+            default: break;
+        }
+        val.innerHTML = output;
+        //output = formatted value (e.g. if brightness: 53%)
+        //newVal = raw value (e.g. 53)
+        return newVal;
     }
 
-    static getLawnStatus() {
-        var lawnStatusObject = document.getElementById("lawnStatus");
+
+    /**Helper to convert a checkbox input return value to "On" or "Off"
+     * @param {String} statusID html id of the checkbox
+     * @returns `String` "Off" or "On" according to the status of the checkbox
+    */
+    static getLawnStatus(statusID) {
+        var lawnStatusObject = document.getElementById(statusID);
         var lawnStatus = "Off";
-        if (lawnStatusObject != undefined) {
-            var lawnStatusBool = lawnStatusObject.checked;
-            if (lawnStatusBool) {lawnStatus="On";}
+        if (lawnStatusObject != null) {
+            if (lawnStatusObject.checked) {lawnStatus="On";}
             else {lawnStatus="Off";}
         }
         return lawnStatus;
+    }
+
+
+    /** Change lighting value inner HTML and light bulb image opacity 
+     * @param {String} textID ID of lighting <p> tag to be changed
+     * @param {String} valueID ID of <input> field 
+     * @param {String} bulbID ID light bulg <img> tag (optional)
+     */
+    static changeLighting(textID, valueID, bulbID="") {
+        var val = document.getElementById(textID);
+        var newVal = document.getElementById(valueID).value;
+        var bulb = document.getElementById(bulbID);
+        //adjust light bulb opacity according to slider (with slight bias)
+        if (bulb != null) {bulb.style.opacity=`${parseInt(newVal)*0.9}%`;}
+        val.innerHTML = `${newVal}%`;
+    }
+
+
+    /** Helper function to get an input value (with verification) 
+     * Function will send warning to console if input tag is not found
+     * @param {String} fieldID 
+     * @returns `String` value of input field (empty string if not found)
+     */
+    static getInputValue(fieldID) {
+        var inputElement = document.getElementById(fieldID);
+        
+        if (inputElement == null) {
+            console.warn("Error finding element with ID: " + fieldID);
+            return "";
+        }
+        return inputElement.value;
+    }
+
+    /** Helper function to get inner HTML from p value (with verification) 
+     * Function will send warning to console if p tag is not found
+     * @param {String} pID 
+     * @returns `String` value of the p tag (empty string if not found)
+     */
+    static getInnerHTML(pID) {
+        var element = document.getElementById(pID);
+        
+        if (element == null) {
+            console.warn("Error finding element with ID: " + pID);
+            return "";
+        }
+        return element.innerHTML;
     }
 }

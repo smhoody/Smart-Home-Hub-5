@@ -42,7 +42,6 @@ class TemperatureSchedule extends React.Component {
     render(){
         return(
             <div className="text-center">
-                <div className="overlay" id="temp-sched-overlay"></div>
                 <div className="row row-custom">
                 <div className="col-sm"></div>
                     <div className="col-sm">

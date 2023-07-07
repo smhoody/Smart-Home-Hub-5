@@ -162,7 +162,7 @@ class Calendar extends React.Component {
     render() {
       return (
         <div>
-          <input type="text" id={this.props.ID+this.props.rangeType} className="small-font" />
+          <input type="text" id={this.props.ID+this.props.rangeType} className="small-font default-calendar"/>
         </div>
       );
     }

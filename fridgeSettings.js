@@ -10,12 +10,16 @@ class FridgeSettings extends React.Component {
             for(var name of Object.keys(settings)) {
                 if(name == "fridgeTemp"){
                     this.updateFridge(settings[name].setting);
+                    this.state.fridgeTemp = settings[name].setting;
                 } else if(name == "freezerTemp"){
                     this.updateFreezer(settings[name].setting);
+                    this.state.freezerTemp = settings[name].setting;
                 } else if(name == "brightness"){
                     this.updateBrightness(settings[name].setting);
+                    this.state.brightness= settings[name].setting;
                 } else if(name == "dispenser"){
                     this.updateDispenser(settings[name].setting);
+                    this.state.dispenser = settings[name].setting;
                 }
             }
         }
@@ -24,95 +28,39 @@ class FridgeSettings extends React.Component {
         Database.saveSettings(this.state.fridgeTemp, this.state.freezerTemp, this.state.brightness, this.state.dispenser);
     }
     handleFreezerPopupChange = () => {this.state.popup = Util.handlePopupChange("room-overlay", "freezer-popupBox", this.state.popup);}
-    // handleFreezerPopupChange = () => {
-    //     var overlay = document.getElementById("room-overlay");
-    //     var popupBox = document.getElementById("freezer-popupBox");
-    //     if (this.state.popup === 0) {
-    //         overlay.style.display = "block";
-    //         popupBox.style.display = "block";
-    //         this.state.popup = 1;
-    //     } else if (this.state.popup === 1) {
-    //         overlay.style.display = "none";
-    //         popupBox.style.display = "none";
-    //         this.state.popup = 0;
-    //     }
-    // }
     handleFridgePopupChange = () => {this.state.popup = Util.handlePopupChange("fridge-overlay", "fridge-popupBox", this.state.popup);}
-    // handleFridgePopupChange = () => {
-    //     var overlay = document.getElementById("fridge-overlay");
-    //     var popupBox = document.getElementById("fridge-popupBox");
-    //     if (this.state.popup === 0) {
-    //         overlay.style.display = "block";
-    //         popupBox.style.display = "block";
-    //         this.state.popup = 1;
-    //     } else if (this.state.popup === 1) {
-    //         overlay.style.display = "none";
-    //         popupBox.style.display = "none";
-    //         this.state.popup = 0;
-    //     }
-    // }
     handleLightingPopupChange = () => {this.state.popup = Util.handlePopupChange("lighting-overlay", "lighting-popupBox", this.state.popup);}
-    // handleLightingPopupChange = () => {
-    //     var overlay = document.getElementById("lighting-overlay");
-    //     var popupBox = document.getElementById("lighting-popupBox");
-    //     if (this.state.popup === 0) {
-    //         overlay.style.display = "block";
-    //         popupBox.style.display = "block";
-    //         this.state.popup = 1;
-    //     } else if (this.state.popup === 1) {
-    //         overlay.style.display = "none";
-    //         popupBox.style.display = "none";
-    //         this.state.popup = 0;
-    //     }
-    // }
     handleWaterPopupChange = () => {this.state.popup = Util.handlePopupChange("water-overlay", "water-popupBox", this.state.popup);}
-    // handleWaterPopupChange = () => {
-    //     var overlay = document.getElementById("water-overlay");
-    //     var popupBox = document.getElementById("water-popupBox");
-    //     if (this.state.popup === 0) {
-    //         overlay.style.display = "block";
-    //         popupBox.style.display = "block";
-    //         this.state.popup = 1;
-    //     } else if (this.state.popup === 1) {
-    //         overlay.style.display = "none";
-    //         popupBox.style.display = "none";
-    //         this.state.popup = 0;
-    //     }
-    // }
+
     changeFreezerText = () => {
-        var val = document.getElementById("freezerTempVal");
-        var newVal = document.getElementById("freezerTempInput").value;
-        val.innerHTML = newVal;
+        //change value displayed on Freezer popup (include color) 
+        Util.changeText("freezerTempVal", "freezerTempInput", "temp-fridge");
     }
     changeFridgeText = () => {
-        var val = document.getElementById("fridgeTempVal");
-        var newVal = document.getElementById("fridgeTempInput").value;
-        val.innerHTML = newVal;
+        //change value displayed on Fridge popup (include color) 
+        Util.changeText("fridgeTempVal", "fridgeTempInput", "temp-fridge");
     }
     changeLightingText = () => {
-        var val = document.getElementById("lightingVal");
-        var newVal = document.getElementById("lightingInput").value;
-        val.innerHTML = `${newVal}%`;
+        //update lighting value on popup window and light bulb opacity
+        Util.changeLighting("fridge-lightingVal", "fridge-lightingInput", "fridge-lightImg");
     }
     confirmFreezer = () => {
-        var val = document.getElementById("freezer-btn");
-        var newVal = document.getElementById("freezerTempInput").value;
-        this.state.freezerTemp = newVal;
-        val.innerHTML = `${newVal} \u00B0`;
+        this.handleFreezerPopupChange(); //close popup
+        //update value displayed on Freezer button on page (no color) 
+        this.state.freezerTemp = Util.changeText("freezer-btn", "freezerTempInput", "temp");
     }
     confirmFridge = () => {
-        var val = document.getElementById("fridge-btn");
-        var newVal = document.getElementById("fridgeTempInput").value;
-        this.state.fridgeTemp = newVal;
-        val.innerHTML = `${newVal} \u00B0`;
+        this.handleFridgePopupChange(); //close popup
+        //update value displayed on Fridge button on page (no color) 
+        this.state.fridgeTemp = Util.changeText("fridge-btn", "fridgeTempInput", "temp");
     }
     confirmLighting = () => {
-        var val = document.getElementById("lighting-btn");
-        var newVal = document.getElementById("lightingInput").value;
-        this.state.brightness = newVal;
-        val.innerHTML = `${newVal}%`;
+        this.handleLightingPopupChange(); //close popup
+        //change value displayed on the Lighting button 
+        this.state.brightness = Util.changeText("fridge-lighting-btn", "fridge-lightingInput", "brightness")
     }
     confirmDispenser = () => {
+        this.handleWaterPopupChange(); //close popup
         var val = document.getElementById("water-btn");
         if(document.getElementById("WaterInput").checked) {
             this.state.dispenser = "Water";
@@ -138,16 +86,14 @@ class FridgeSettings extends React.Component {
     }
     updateBrightness = (temp) => {
         this.state.brightness = temp;
-        var val = document.getElementById("lightingVal");
-        var btnVal = document.getElementById("lighting-btn");
-        val.innerHTML = temp;
+        var val = document.getElementById("fridge-lightingVal");
+        var btnVal = document.getElementById("fridge-lighting-btn");
+        val.innerHTML = `${temp}%`;
         btnVal.innerHTML = `${temp}%`;
     }
     updateDispenser = (temp) => {
         this.state.dispenser = temp;
-        //var val = document.getElementById("lightingVal");
         var btnVal = document.getElementById("water-btn");
-        //val.innerHTML = temp;
         btnVal.innerHTML = temp;
     }
     render(){
@@ -164,7 +110,7 @@ class FridgeSettings extends React.Component {
                             <div>
                                 <p className="default-text" id="roomTempText">Enter Freezer Temperature</p>
                                 <p className="default-text" id="freezerTempVal">{this.state.freezerTemp}</p>
-                                <input type="range" min="0" max="100" className="slider" id="freezerTempInput" onChange={this.changeFreezerText}/>
+                                <input type="range" min="-4" max="4"className="slider" id="freezerTempInput" onChange={this.changeFreezerText}/>
                             </div>
                             <div className="row row-custom">
                                 <div className="col-sm">
@@ -188,8 +134,8 @@ class FridgeSettings extends React.Component {
                             <h2 className="default-text">Change Fridge Temperature</h2>
                             <div>
                                 <p className="default-text" id="roomTempText">Enter Fridge Temperature</p>
-                                <p className="default-text" id="fridgeTempVal">{this.state.fridgeTemp}</p>
-                                <input type="range" min="0" max="100" className="slider" id="fridgeTempInput" onChange={this.changeFridgeText}/>
+                                <p className="default-text tempValue" id="fridgeTempVal">{this.state.fridgeTemp}</p>
+                                <input type="range" min="32" max="40" className="slider" id="fridgeTempInput" onChange={this.changeFridgeText}/>
                             </div>
                             <div className="row row-custom">
                                 <div className="col-sm">
@@ -217,9 +163,9 @@ class FridgeSettings extends React.Component {
                             <div>
                                 <p className="default-text" id="roomTempText">Choose Dispenser Type</p>
                                 <input type="radio" className="cstm-checkbox" id="WaterInput" name="Water_Ice" value="Water" onChange={this.changeWaterText}/>
-                                <label for="WaterInput" className="default-text">Water</label><br/>
+                                <label htmlFor="WaterInput" className="default-text">Water</label><br/>
                                 <input type="radio" className="cstm-checkbox" id="IceInput" name="Water_Ice" value="Ice" onChange={this.changeWaterText}/>
-                                <label for="IceInput" className="default-text">Ice</label>
+                                <label htmlFor="IceInput" className="default-text">Ice</label>
                             </div>
                             <div className="row row-custom">
                                 <div className="col-sm">
@@ -237,15 +183,17 @@ class FridgeSettings extends React.Component {
                     <div className="col-sm"></div>
                     <div className="col-sm">
                         <button className="default-btn btn btn-primary btn-lg m-3 btn-custom"
-                            onClick={this.handleLightingPopupChange}>Lighting<br/><p id="lighting-btn">{this.state.brightness}%</p></button>
+                            onClick={this.handleLightingPopupChange}>Lighting<br/><p id="fridge-lighting-btn">{this.state.brightness}%</p></button>
                         <div className="overlay" id="lighting-overlay"></div>
                             <div className="popupBox" id="lighting-popupBox">
                             <h2 className="default-text">Change Brightness</h2>
-                            <div>
-                                <p className="default-text" id="roomTempText">Enter Fridge Brightness</p>
-                                <p className="default-text" id="lightingVal">{this.state.brightness}%</p>
-                                <input type="range" min="0" max="100" className="slider" id="lightingInput" onChange={this.changeLightingText}/>
+                            <div className="col-sm default-inline">
+                                {/* LIGHT BULB - use ID for changeLighting() */}
+                                <img className="bulb" src="resources/bulb.png" id="fridge-lightImg"></img> 
+                                {/* LIGHTING VALUE - use ID for changeLighting() */}
+                                <p className="default-text settingValue" id="fridge-lightingVal">{this.state.brightness}%</p>
                             </div>
+                                <input type="range" min="0" max="100" className="slider" id="fridge-lightingInput" onChange={this.changeLightingText}/>
                             <div className="row row-custom">
                                 <div className="col-sm">
                                     <button className="default-btn-small" id="closeButton" 

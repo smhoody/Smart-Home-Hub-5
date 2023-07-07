@@ -5,6 +5,14 @@
     --wheat: rgb(191, 161, 129); /*default color theme for elements on the page*/
     --wheat-light: rgb(217, 202, 186);
     --wheat-faded: rgba(217, 202, 186, 0.542);
+    --wheat-faded-light: rgba(217, 202, 186, 0.864);
+    --wheat-faded-medium: rgba(217, 202, 186, 0.754);
+    --checked-on: rgb(4, 205, 4);
+    /* --checked-on: rgb(21, 245, 249); */
+    --checked-off: rgb(49, 46, 46);
+    --checked-off-hover: rgb(61, 58, 58);
+    --checked-on-hover: rgba(3, 215, 3, 0.767);
+    /* --checked-on-hover: rgba(0, 217, 255, 0.85); */
     --home-btn-clr-default: rgb(191, 161, 129);
     --home-btn-clr-hover: rgb(156, 132, 106);
     --home-btn-clr-click: rgb(226, 191, 154);
@@ -59,6 +67,12 @@ body {
     padding: 10px;
     font-size: 20px;
 }
+.lawn-btn-custom {
+    width: 200px;
+    height: 120px;
+    padding: 10px;
+    font-size: 20px;
+}
 .default-btn-small {
     background-color: var(--home-btn-clr-default);
     border-color: var(--home-btn-clr-default);
@@ -96,6 +110,60 @@ body {
     border-radius: 20%;
     height: 100px;
     width: 100px;
+}
+
+.default-checkbox {
+    font-size:2em;
+    background-color: var(--wheat);
+    border: 1px solid var(--wheat-faded-light);
+}
+.default-checkbox:checked {
+    background-color: var(--wheat-light);
+}
+
+.default-checkbox:focus {
+    box-shadow: none;
+}
+
+.checkbox-label-off {
+    color: var(--wheat-faded-medium);
+}
+.checkbox-label-on {
+    color: var(--wheat-light);
+}
+/*CHECKBOX STYLE*/
+.default-checkbox input[type="checkbox"] {
+    background-color: var(--checked-off); /*set background to Off color */
+    width: 3em;
+    height: 3em;
+    border: 0.2em solid rgb(0, 0, 0);
+    appearance: none; /*override default css for checkbox*/
+    cursor: pointer; /*turn cursor into a pointer*/
+    border-radius: 100%;
+    display: grid;
+    place-content: center; /*content inside the checkbox*/
+}
+.default-checkbox input[type="checkbox"]:hover {
+    background-color: var(--checked-off-hover);
+}
+.default-checkbox input[type="checkbox"]::before {
+    content:"";
+    text-align: center;
+    width: 2.70em;
+    height: 2.70em;
+    border-radius: 100%;
+    border: 0.1em solid rgb(0, 0, 0);
+    transform: scale(0); /*set this background to 0 size*/
+    transition: 1ms; /*movement effect from Off to On*/
+    box-shadow: inset 0.05em 0.05em; /*set inside checkbox*/
+    background-color: var(--checked-on); /*set background to On color*/ 
+    place-content: center; /*content inside the checkbox*/
+}
+.default-checkbox input[type="checkbox"]:checked::before {
+    transform: scale(1); /*fill the checkbox with above styling*/
+}
+.default-checkbox input[type="checkbox"]:checked:hover::before { /*hovering effect when checked*/
+    background-color: var(--checked-on-hover);
 }
 
 
@@ -187,6 +255,14 @@ div.ui-datepicker{
     bottom: 0;
 }
 
+.default-calendar {
+    width: 9em;
+}
+.calendar-label {
+    margin-top: 0.6em;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
 
 .temp-comp p {
     display:inline;
@@ -219,40 +295,56 @@ div.ui-datepicker{
 #roomTempText {
     margin-top:10px;
 }
+.inputTitle { /*for a P tag above an input field*/
+    margin-bottom: 0px;
+}
 
 .slider {
     appearance: none;
-    width: 100%; /* Full-width */
-    height: 25px; /* Specified height */
-    background: #f1f1f1; /* Grey background */
+    width: 100%; 
+    height: 25px; 
+    background: #f1f1f1; 
     border-radius: 30px;
-    outline: none; /* Remove outline */
-    opacity: 0.8; /* Set transparency (for mouse-over effects on hover) */
+    /* -webkit-appearance: slider-vertical; /*vertical slider*\/ */
+    outline: none; 
+    opacity: 0.8; /* for effects on hover */
     transition: opacity .2s;
 }
 .slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
+    opacity: 1; /* full brightness on mouse hover */
 }
 .slider::-webkit-slider-thumb {
     appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
+    width: 25px; 
+    height: 25px; 
     background: var(--wheat);
-    border-radius: 100%;
+    border-radius: 100%; /*circle slider*/
 }
 
 
 #cityBtn {
     font-size: 3em;
 }
-
+.bulb {
+    width:50px; 
+    height:50px;
+}
+.settingValue {
+    margin-left: 10px;
+    font-size: 2em;
+}
 #roomName{
     font-weight: bold;
 }
-
+.tempValback {
+    background-color: #f1f1f1;
+    margin: 0 auto; /*centers the column*/
+    border-radius: 20px;
+}
 .tempValue {
     font-size: 1.9em;
 }
 .tempText {
     margin-bottom: 2px;
 }
+
