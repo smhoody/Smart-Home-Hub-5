@@ -9,7 +9,8 @@ class GardenLighting extends React.Component {
                       from: new Date(),
                       to: new Date(),
                       current_status:false,
-                      current_area:""};
+                      current_area:"",
+                      space:`\u3000`};
 
     }
     //on mount, build buttons for all rooms
@@ -30,6 +31,18 @@ class GardenLighting extends React.Component {
         this.state.popup = Util.handlePopupChange(this.state.popupOverlayID_add, this.state.popupBoxID_add, this.state.popup);
     }
     handlePopupSet = (areaName) => {
+        /*
+        this.state.startLight = startLight;
+        var val = document.getElementById("lightingVal3");
+        var newVal = startLight;
+        val.innerHTML = `${newVal}%`;
+
+        this.state.endLight = endLight;
+        var val = document.getElementById("lightingVal4");
+        var newVal = endLight;
+        val.innerHTML = `${newVal}%`;
+        */
+
         this.current_area = areaName;
         this.state.popup = Util.handlePopupChange(this.state.popupOverlayID_set, this.state.popupBoxID_set, this.state.popup, areaName);
     }
@@ -48,6 +61,31 @@ class GardenLighting extends React.Component {
     }
     changeEndDate = (date) => {
         this.setState({to:date});
+    }
+    changeLightingText = () => {
+        var val = document.getElementById("lightingVal1");
+        var newVal = document.getElementById("lightingInput1").value;
+        val.innerHTML = `${newVal}%`;
+        //this.state.startLight = newVal;
+    }
+    changeLightingText2 = () => {
+        var val = document.getElementById("lightingVal2");
+        var newVal = document.getElementById("lightingInput2").value;
+        val.innerHTML = `${newVal}%`;
+        //this.state.endLight = newVal;
+    }
+    changeLightingText3 = () => {
+        var val = document.getElementById("lightingVal3");
+        var newVal = document.getElementById("lightingInput3").value;
+        //this.state.startLight = newVal;
+        val.innerHTML = `${newVal}%`;
+        //this.state.startLight = newVal;
+    }
+    changeLightingText4 = () => {
+        var val = document.getElementById("lightingVal4");
+        var newVal = document.getElementById("lightingInput4").value;
+        val.innerHTML = `${newVal}%`;
+        //this.state.endLight = newVal;
     }
 
     render(){
@@ -71,6 +109,19 @@ class GardenLighting extends React.Component {
                         </div>
                     </div>
                     <div className="row row-custom">
+                        <div className="row row-custom">
+                            <div className="col-sm">
+                                <p className="default-text">Start Light Intensity</p>
+                                <p className="default-text" id="lightingVal1">0</p>
+                                <input type="range" min="0" max="100" className="slider" id="lightingInput1" onChange={this.changeLightingText}/>
+                            </div>
+                            <div className="col-sm"></div>
+                            <div className="col-sm">
+                                <p className="default-text">End Light Intensity</p>
+                                <p className="default-text" id="lightingVal2">0</p>
+                                <input type="range" min="0" max="100" className="slider" id="lightingInput2" onChange={this.changeLightingText2}/>
+                            </div>
+                        </div>
                         <div className="col-sm">
                             {/* TODO: add current schedule (if any), add scheduled temperature value*/}
                             <p className="default-text" id="waterScheduleFromText">From</p>
@@ -121,6 +172,18 @@ class GardenLighting extends React.Component {
                         <div className="default-text" id="areaName"></div>
                     </div>
                     <div className="row row-custom">
+                        <div className="row row-custom">
+                            <div className="col-sm">
+                                <p className="default-text">Start Light Intensity</p>
+                                <p className="default-text" id="lightingVal3">{this.state.space}</p>
+                                <input type="range" min="0" max="100" className="slider" id="lightingInput3" onChange={this.changeLightingText3}/>
+                            </div>
+                            <div className="col-sm">
+                                <p className="default-text">End Light Intensity</p>
+                                <p className="default-text" id="lightingVal4">{this.state.space}</p>
+                                <input type="range" min="0" max="100" className="slider" id="lightingInput4" onChange={this.changeLightingText4}/>
+                            </div>
+                        </div>
                         <div className="col-sm">
                             {/* TODO: add current schedule (if any), add scheduled temperature value*/}
                             <p className="default-text" id="waterScheduleFromText">From</p>
