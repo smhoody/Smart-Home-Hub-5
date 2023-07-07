@@ -276,6 +276,85 @@ class Database extends React.Component {
         return(JSObject);
     }
 
+
+    /** Save Device data to local storage
+     * @param {String} areaName name of lawn area
+     * @param {Date} from start date of schedule
+     * @param {Date} to end date of schedule
+     * @param {String} overlayID html ID of the overlay for the page
+     * @param {String} popupID html ID of the popup for the page
+     */
+    static saveDevices(device, from, to, overlayID, popupID) {
+        var db = this.getDB("devices");
+        var buttonText = "";
+
+        //default lawn values
+        var w_status = "Off";
+        //var w_start = "";
+        //var w_end = "";
+        var w_start = from;
+        var w_end = to;
+
+        //save device data
+        db[device] = {       water_status: w_status,
+                                water_start: w_start,
+                                  water_end: w_end};
+
+        this.saveDB(db, "devices");
+
+        var button = document.createElement("button");
+        button.type = "button";
+        button.innerHTML = `<strong>${device}</strong>`;
+        button.id = device;
+        button.className = "default-btn btn btn-primary btn-lg m-3 lawn-btn-custom";
+        button.addEventListener("click", () => {
+            var overlay = document.getElementById(overlayID);
+            var popupBox = document.getElementById(popupID);
+            if (this.state.popup === 0) {
+                overlay.style.display = "block";
+                popupBox.style.display = "block";
+                this.state.popup = 1;
+            } else if (this.state.popup === 1) {
+                overlay.style.display = "none";
+                popupBox.style.display = "none";
+                this.state.popup = 0;
+            }
+        });
+        var container = document.getElementById("garden-sched-buttons");
+        container.appendChild(button);
+    }
+
+
+   /** Update device schedule
+    * @param {String} areaName name/key of lawn area
+    * @param {Date} from start date of schedule
+    * @param {Date} to end date of schedule 
+    * @param {Array<Int>} values array of statuses (e.g. [0,1] 0=Off,1 for On)
+    */
+    static updateDevices(device, from, to, values, status) {
+        var db = this.getDB("devices");
+        var buttonText = "";        
+        
+        //update schedule for water or lighting
+        var status = (values[0] ? "On" : "Off");
+        db[areaName].water_status = status;
+        db[device].water_start = from;
+        db[device].water_end = to; 
+        buttonText = `<strong>${device}</strong>`;
+
+        var areaButtonElement = document.getElementById(device);
+        areaButtonElement.innerHTML = buttonText;
+        this.saveDB(db, "devices");
+    }
+    
+    /**Return Device data
+     * @returns `Object` (e.g.: {*lawn name*: {water_status:"", water_start:""...}})
+     * Object = { } if no lawn area data has been created
+     */
+    static retrieveDevices() {
+        return(this.getDB("devices"));
+    }
+
     static cleardb = () => {
         localStorage.clear();
     }
