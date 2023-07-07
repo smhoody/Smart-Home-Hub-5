@@ -74,7 +74,11 @@ class Weather extends React.Component {
     }
     componentDidMount(){
         this.getTemperature();
-        this.refresher = setInterval(() => this.tick(),1000);
+        this.refresher = setInterval(() => this.tick(),10000);
+        //refresh weather every 10 seconds
+        //Open Meteo allows up to 10,000 API calls daily 
+        // 1 call every 10s = 6/min = 360/h = 8,640/day
+        //the lowest you can set the interval is 8640ms, which results in 10,000 API calls in 24h
     }
     componentWillUnmount(){
         clearInterval(this.refresher);

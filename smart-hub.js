@@ -14,20 +14,10 @@ class App extends React.Component{
     handlePowerChange = (x) => {this.setState({power:x});}
     handleTempChange = (temp) => {this.setState({temperature:temp});}
     handlePopupChange = () => {
-        var overlay = document.getElementById("city-overlay");
-        var popupBox = document.getElementById("city-popupBox");
-        if (this.state.popup === 0) {
-            overlay.style.display = "block";
-            popupBox.style.display = "block";
-            this.state.popup = 1;
-        } else if (this.state.popup === 1) {
-            overlay.style.display = "none";
-            popupBox.style.display = "none";
-            this.state.popup = 0;
-        }
+        this.state.popup = Util.handlePopupChange("city-overlay", "city-popupBox", this.state.popup);
     }
     handleCityChange = () => {
-        this.handlePopupChange();
+        this.state.popup = Util.handlePopupChange("city-overlay", "city-popupBox", this.state.popup);
         var cityName = document.getElementById("cityInput").value;
         this.setState({city:cityName});
     }
