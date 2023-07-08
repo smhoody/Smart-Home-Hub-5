@@ -19,42 +19,18 @@ class SetRoomTemp extends React.Component {
        }
     }
     handlePopupChange = () => {
-        var overlay = document.getElementById("room-overlay");
-        var popupBox = document.getElementById("room-popupBox");
-        if (this.state.popup === 0) {
-            overlay.style.display = "block";
-            popupBox.style.display = "block";
-            this.state.popup = 1;
-        } else if (this.state.popup === 1) {
-            overlay.style.display = "none";
-            popupBox.style.display = "none";
-            this.state.popup = 0;
-        }
+        this.state.popup = Util.handlePopupChange("room-overlay", "room-popupBox", this.state.popup);
     }
     handlePopupChangeBtn = (roomName) => {
-        var overlay = document.getElementById("rooms-overlay");
-        var popupBox = document.getElementById("rooms-popupBox");
-        if (this.state.popup === 0) {
-            overlay.style.display = "block";
-            popupBox.style.display = "block";
-            this.state.popup = 1;
-            var val = document.getElementById("roomName");
-            var newVal = roomName;
-            val.innerHTML = newVal;
-            this.state.current_room = roomName;
-        } else if (this.state.popup === 1) {
-            overlay.style.display = "none";
-            popupBox.style.display = "none";
-            this.state.popup = 0;
-        }
-        
+        this.state.current_room = roomName;
+        this.state.popup = Util.handlePopupChange("rooms-overlay", "rooms-popupBox", this.state.popup, roomName);
     }
     saveRoom = () => {
-        this.handlePopupChange();
+        this.state.popup = Util.handlePopupChange("room-overlay", "room-popupBox", this.state.popup);
         Database.saveRoom("roomNameInput", "room-temp-input-add");
     }
     updateRoom = () => {
-        this.handlePopupChangeBtn();
+        this.state.popup = Util.handlePopupChange("rooms-overlay", "rooms-popupBox", this.state.popup, this.state.current_room);
         Database.updateRoom(this.state.current_room, "room-temp-input-set");
     }
     changeText = () => {

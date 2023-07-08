@@ -64,12 +64,6 @@ class GardenIrrigation extends React.Component {
 
     render(){
         $(document).ready(function(){
-            document.addEventListener("keyup", checkPopup);
-            function checkPopup(event) { //maybe can close popup with escape key
-                if (event.key == "Escape") {
-                    console.log("action");
-                }
-            }
             var checkbox_label_id_add = "#water-status-text-add";
             var checkbox_label_id_set = "#water-status-text-set";
             var checkbox_id_add = "#water-status-add";
@@ -178,7 +172,6 @@ class GardenIrrigation extends React.Component {
 
 
                 {/* Edit lawn area popup */}
-                {/* //need to add a Remove Area button to each lawn button */}
                 <div className="overlay" id={this.state.popupOverlayID_set}></div>
                 <div className="popupBox" id={this.state.popupBoxID_set}>
                     <h2 className="default-text">Set Irrigation Schedule</h2>
@@ -187,7 +180,6 @@ class GardenIrrigation extends React.Component {
                     </div>
                     <div className="row row-custom">
                         <div className="col-sm">
-                            {/* TODO: add current schedule (if any), add scheduled temperature value*/}
                             <p className="default-text" id="waterScheduleFromTextSet">From</p>
                             <Calendar current={this.state.from} ID="waterScheduleSet" 
                             rangeType="start" handleChange={this.changeStartDate}/>

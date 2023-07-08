@@ -85,14 +85,6 @@ class GardenLighting extends React.Component {
     }
 
     render(){
-        $(document).ready(function(){
-            document.addEventListener("keyup", checkPopup);
-            function checkPopup(event) { //maybe can close popup with escape key
-                if (event.key == "Escape") {
-                    console.log("action");
-                }
-            }
-        });
         return(
             <div className="text-center">
                 <div className="row row-custom">
@@ -143,7 +135,6 @@ class GardenLighting extends React.Component {
                                     {/* LIGHTING VALUE - use this ID for changeLighting() */}
                                     <p className="default-text settingValue" id="start-lightingVal-add">{this.state.start_brightness}%</p>
                                 </div>
-                                {/* <p className="default-text" id="lightingVal1">0</p> */}
                                 <input type="range" min="0" max="100" className="slider" id="start-lightingInput-add" onChange={this.changeLightingText}/>
                             </div>
                             <div className="col-sm"></div>
@@ -155,7 +146,6 @@ class GardenLighting extends React.Component {
                                     {/* LIGHTING VALUE - use this ID for changeLighting() */}
                                     <p className="default-text settingValue" id="end-lightingVal-add">{this.state.end_brightness}%</p>
                                 </div>
-                                {/* <p className="default-text" id="lightingVal2">0</p> */}
                                 <input type="range" min="0" max="100" className="slider" id="end-lightingInput-add" onChange={this.changeLightingText2}/>
                             </div>
                         </div>
@@ -199,7 +189,6 @@ class GardenLighting extends React.Component {
                                     {/* LIGHTING VALUE - use this ID for changeLighting() */}
                                     <p className="default-text settingValue" id="start-lightingVal-set">{this.state.start_brightness}%</p>
                                 </div>
-                                {/* <p className="default-text" id="lightingVal3">{this.state.space}</p> */}
                                 <input type="range" min="0" max="100" className="slider" id="start-lightingInput-set" onChange={this.changeLightingText3}/>
                             </div>
                             <div className="col-sm">
@@ -210,12 +199,10 @@ class GardenLighting extends React.Component {
                                     {/* LIGHTING VALUE - use this ID for changeLighting() */}
                                     <p className="default-text settingValue" id="end-lightingVal-set">{this.state.end_brightness}%</p>
                                 </div>
-                                {/* <p className="default-text" id="lightingVal4">{this.state.space}</p> */}
                                 <input type="range" min="0" max="100" className="slider" id="end-lightingInput-set" onChange={this.changeLightingText4}/>
                             </div>
                         </div>
                         <div className="col-sm">
-                            {/* TODO: add current schedule (if any), add scheduled temperature value*/}
                             <p className="default-text" id="waterScheduleFromText">From</p>
                             <Calendar current={this.state.from} ID="waterSchedule" 
                             rangeType="start" handleChange={this.changeStartDate}/>

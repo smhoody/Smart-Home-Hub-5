@@ -50,8 +50,7 @@ class Database extends React.Component {
                         schedule_end:""};
 
         //save to local storage
-        var JSONObject = JSON.stringify(db);
-        localStorage.setItem("rooms", JSONObject);
+        this.saveDB(db, "rooms");
 
         // Warning: the buttons added depend on the overlay and popup IDs for the page!!
         var button = document.createElement("button");
@@ -89,6 +88,7 @@ class Database extends React.Component {
             db[roomName].temp = roomTemp;
         }
 
+        //update temp value on page button 
         var roomButtonElement = document.getElementById(roomName);
         roomButtonElement.innerHTML = `<strong>${roomName}</strong> <br> Temp: ${roomTemp}`;
 
@@ -96,19 +96,31 @@ class Database extends React.Component {
     }
 
 
-    //update the room temperature schedule
-    //params: 
-    // - roomName: String (name/key of room)
-    // - from: Date (start date of schedule)
-    // - to: Date (end date of schedule) 
-    static updateRoomSchedule(roomName, from, to) {
+    /**Update the room temperature schedule
+     * @param {String} roomName name/key of room
+     * @param {String} from start date of schedule
+     * @param {String} to end date of schedule
+     * @param {String} temperatureID html ID of new temperature input
+     * @returns `Int` room temperature value
+     */
+    static updateRoomSchedule(roomName, from, to, temperatureID) {
         var db = this.getDB("rooms");
 
-        //update schedules
-        db[roomName].schedule_start = from;
-        db[roomName].schedule_end = to;
-        var JSONObject = JSON.stringify(db);        
-        localStorage.setItem("rooms", JSONObject);
+        var roomTemp = Util.getInputValue(temperatureID); //get temp from input tag
+
+        //update schedule & temp
+        db[roomName] = {          temp: roomTemp,
+                        schedule_start: from,
+                          schedule_end: to};
+
+        //update temp value on page button 
+
+        var roomButtonElement = document.getElementById(roomName);
+        roomButtonElement.innerHTML = `<strong>${roomName}</strong> <br> Temp: ${roomTemp}`;
+
+        this.saveDB(db,"rooms");
+
+        return roomTemp;
     }
 
     static retrieveRoom = () => {
@@ -368,7 +380,7 @@ class Util {
      * @param {String} overlayID id of overlay div in the rendered page
      * @param {String} popupID id of popup div
      * @param {Int} stateValue the state of the popup, 0=hidden, 1=display
-     * @param {String} type (optional) type of page the button is for (e.g. "room", "lawn")
+     * @param {String} roomName (optional) if popup is for a room, include name to display on popup
      * @returns `Int` state value of the popup (0=hidden, 1=display)
      */
     static handlePopupChange(overlayID, popupID, stateValue, roomName=null) {
@@ -396,19 +408,22 @@ class Util {
     }
 
 
-   /** Changes a tag's inner HTML
+   /**Changes a tag's inner HTML
     * @param {String} textID html ID of the p tag that is to be changed
     * @param {String} valueID html ID of the input tag that is to be read 
     * @param {String} type type of input value (e.g. "temp-color", "temp", "brightness")
     * @returns `String` value of input tag passed to this function
     */
-    static changeText(textID, valueID, type="") {
+    static changeText(textID, valueID, type="", value="") {
         var val = document.getElementById(textID);
         if (val == null) {return;} //if text not found, nothing can happen
 
         var newValElement = document.getElementById(valueID);
         var newVal = "";
         if (newValElement != null) {newVal = newValElement.value;}
+        else {newVal = (value ? value : "");} 
+        //if element not found and value is passed, use value 
+
         //if no input was found, value will be empty
         var output = newVal;
         switch (type) { 

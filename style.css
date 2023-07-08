@@ -133,7 +133,9 @@ body {
 .checkbox-label-on {
     color: var(--wheat-light);
 }
-/*CHECKBOX STYLE*/
+
+
+/*CHECKBOX STYLE - green button - not used because bootstrap is nicer.. -1 hour :-) */
 .default-checkbox input[type="checkbox"] {
     background-color: var(--checked-off); /*set background to Off color */
     width: 3em;
@@ -166,6 +168,11 @@ body {
 }
 .default-checkbox input[type="checkbox"]:checked:hover::before { /*hovering effect when checked*/
     background-color: var(--checked-on-hover);
+}
+
+
+.btn-left-align {
+    float:left;
 }
 
 

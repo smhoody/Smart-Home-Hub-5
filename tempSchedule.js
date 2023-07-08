@@ -2,8 +2,8 @@ class TemperatureSchedule extends React.Component {
     constructor(props){
         super(props);
         this.state = {popup:0,
-                      from: new Date(),
-                      to: new Date(),
+                      from: "",
+                      to: "",
                       current_room:"", 
                       currTemp:0};
         <Database PopupChange={this.handlePopupChange}/>
@@ -16,23 +16,29 @@ class TemperatureSchedule extends React.Component {
         for (var name of Object.keys(rooms)) {
             var button = document.createElement("button");
             button.type = "button";
-            button.innerHTML = `${name} <br> Temp: ${rooms[name].temp}`;
+            button.innerHTML = `<strong>${name}</strong> <br> Temp: ${rooms[name].temp}`;
             button.className = "default-btn btn btn-primary btn-lg m-3 room-btn-custom";
+            button.id = name;
             button.addEventListener("click", this.handlePopup.bind(null, name, rooms[name].temp));
             var container = document.getElementById("temp-sched-buttons");
             container.appendChild(button);
         }
     }
     handlePopup = (roomName, roomTemp) => {
-        this.current_room = roomName;
-
+        if (this.state.current_room != roomName && this.state.popup === 0) {
+            this.state.currTemp = Database.getDB("rooms")[roomName]["temp"];
+        } 
+        this.state.current_room = roomName;
         this.state.popup = Util.handlePopupChange("temp-sched-overlay", "temp-sched-popupBox", this.state.popup, roomName);
-        this.updateCurrTemp(roomTemp);
+        Util.changeText("curr-temp", "", "temp-color", this.state.currTemp);
     }
 
     updateRoom = () => {
         this.state.popup = Util.handlePopupChange("temp-sched-overlay", "temp-sched-popupBox", this.state.popup, this.state.current_room);
-        Database.updateRoomSchedule(this.current_room, this.state.from, this.state.to);
+        this.state.currTemp = Database.updateRoomSchedule(this.state.current_room, 
+                                                          this.state.from, 
+                                                          this.state.to, 
+                                                          "room-temp-input-add");
     }
 
     changeStartDate = (date) => {
@@ -40,12 +46,6 @@ class TemperatureSchedule extends React.Component {
     }
     changeEndDate = (date) => {
         this.setState({to:date});
-    }
-
-    updateCurrTemp = (roomTemp) => {
-        this.state.currTemp = roomTemp;
-        var val = document.getElementById("curr-temp");
-        val.innerHTML = `${roomTemp} \u00b0`;
     }
 
     changeText = () => {
@@ -95,7 +95,7 @@ class TemperatureSchedule extends React.Component {
                             <div className="col-sm"></div>
                             <div className="col-sm">
                                 <div>
-                                    <p className="default-text tempText" id="roomTempText">Enter new Room Temperature</p>
+                                    <p className="default-text tempText" id="roomTempText">Enter New Temperature</p>
                                     <div className="tempValback col-sm-5">
                                         <p className="default-text tempValue" id="temp-val-add">50&deg;</p>
                                     </div>
@@ -104,7 +104,6 @@ class TemperatureSchedule extends React.Component {
                             </div>
                         </div>
                         <div className="col-sm">
-                            {/* TODO: add current schedule (if any), add scheduled temperature value*/}
                             <p className="default-text" id="tempScheduleFromText">From</p>
                             <Calendar current={this.state.from} ID="tempSchedule" 
                             rangeType="start" handleChange={this.changeStartDate}/>
@@ -116,13 +115,14 @@ class TemperatureSchedule extends React.Component {
                         </div>
                         <div className="row row-custom">
                             <div className="col-sm">
-                                <button className="default-btn-small" id="closeButton" 
+                                <button className="default-btn-small d-inline btn-left-align" id="closeButton" 
                                 onClick={this.handlePopup}>Close</button>
+                                <button className="default-btn-small d-inline btn-left-align" id="enterButton" 
+                                onClick={this.updateRoom}>Enter</button>
                             </div>
                             <div className="col-sm"></div>
                             <div className="col-sm">
-                                <button className="default-btn-small" id="enterButton" 
-                                onClick={this.updateRoom}>Enter</button>
+                                
                             </div>
                         </div>
                     </div>

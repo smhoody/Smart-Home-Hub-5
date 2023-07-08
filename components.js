@@ -130,6 +130,11 @@ class Calendar extends React.Component {
         // - current date
         // - range type ("start" or "end")
         // - handleChange()
+
+        //the ID to get the value of the date is the ID inherited + range type
+        //e.g. ID=garden-lights-schedule
+        //     range type=start
+        // then HTML id will be: #garden-lights-schedulestart
     }
     componentDidMount() {
         var componentID = "#" + this.props.ID + this.props.rangeType;
