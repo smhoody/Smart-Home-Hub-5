@@ -290,7 +290,7 @@ class Database extends React.Component {
 
 
     /** Save Device data to local storage
-     * @param {String} areaName name of lawn area
+     * @param {String} deviceName of device
      * @param {Date} from start date of schedule
      * @param {Date} to end date of schedule
      * @param {String} overlayID html ID of the overlay for the page
@@ -298,19 +298,16 @@ class Database extends React.Component {
      */
     static saveDevices(device, from, to, overlayID, popupID) {
         var db = this.getDB("devices");
-        //var buttonText = "";
 
         //default lawn values
-        var w_status = "Off";
-        //var w_start = "";
-        //var w_end = "";
-        var w_start = from;
-        var w_end = to;
+        var status = "Off";
+        var start = from;
+        var end = to;
 
         //save device data
-        db[device] = {       water_status: w_status,
-                                water_start: w_start,
-                                  water_end: w_end};
+        db[device] = {status: status,
+                       start: start,
+                         end: end};
 
         this.saveDB(db, "devices");
 
@@ -338,10 +335,10 @@ class Database extends React.Component {
 
 
    /** Update device schedule
-    * @param {String} areaName name/key of lawn area
+    * @param {String} device name/key of device
     * @param {Date} from start date of schedule
     * @param {Date} to end date of schedule 
-    * @param {Array<Int>} values array of statuses (e.g. [0,1] 0=Off,1 for On)
+    * @param {Int} status status of device (0=Off, 1=On)
     */
     static updateDevices(device, from, to, values, status) {
         var db = this.getDB("devices");
