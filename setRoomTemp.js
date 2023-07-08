@@ -25,6 +25,10 @@ class SetRoomTemp extends React.Component {
         this.state.current_room = roomName;
         this.state.popup = Util.handlePopupChange("rooms-overlay", "rooms-popupBox", this.state.popup, roomName);
     }
+    handlePopupChangeHouse = () => {
+        //this.state.current_room = roomName;
+        this.state.popup = Util.handlePopupChange("house-overlay", "house-popupBox", this.state.popup);
+    }
     saveRoom = () => {
         this.state.popup = Util.handlePopupChange("room-overlay", "room-popupBox", this.state.popup);
         Database.saveRoom("roomNameInput", "room-temp-input-add");
@@ -39,6 +43,13 @@ class SetRoomTemp extends React.Component {
     changeText2 = () => {
         Util.changeText("temp-val-set", "room-temp-input-set", "temp-color");
     }
+    changeText3 = () => {
+        Util.changeText("house-temp-val-set", "house-temp-input-set", "temp-color");
+    }
+    changeHouseTemperature = () => {
+        var val = document.getElementById("house-temp-input-set").value;
+        this.props.changeHouseTemp(val);
+    }
     render(){
         return(
             <div className="text-center">
@@ -48,6 +59,8 @@ class SetRoomTemp extends React.Component {
                     <div className="col-sm">
                         <button className="default-btn btn btn-primary btn-lg m-1"
                         onClick={this.handlePopupChange}>Add Room</button>
+                        <button className="default-btn btn btn-primary btn-lg m-1"
+                        onClick={this.handlePopupChangeHouse}>Set House<br/>Temperature</button>
                     </div>
                     <div className="col-sm"></div>
                 </div>
@@ -109,6 +122,35 @@ class SetRoomTemp extends React.Component {
                                 <div className="col-sm">
                                     <button className="default-btn-small" id="enterButton" 
                                     onClick={this.updateRoom}>Enter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm"></div>
+                </div>
+
+                <div className="row row-custom m-3">
+                    <div className="col-sm"></div>
+                    <div className="col-sm" id="roomButtons">
+                        <div className="overlay" id="house-overlay"></div>
+                        <div className="popupBox" id="house-popupBox">
+                            <h2 className="default-text">Set House Temp</h2>
+                            <div>
+                                <p className="default-text tempText" id="roomTempText">Set House Temperature</p>
+                                <div className="tempValback col-sm-5">
+                                    <p className="default-text tempValue" id="house-temp-val-set">{this.props.temperature}&deg;</p>
+                                </div>
+                                <input type="range" min="50" max="100" className="slider" id="house-temp-input-set" onChange={this.changeText3}/>
+                            </div>
+                            <div className="row row-custom">
+                                <div className="col-sm">
+                                    <button className="default-btn-small" id="closeButton" 
+                                    onClick={this.handlePopupChangeHouse}>Close</button>
+                                </div>
+                                <div className="col-sm"></div>
+                                <div className="col-sm">
+                                    <button className="default-btn-small" id="enterButton" 
+                                    onClick={this.changeHouseTemperature}>Enter</button>
                                 </div>
                             </div>
                         </div>

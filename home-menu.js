@@ -9,6 +9,7 @@ class HomeMenu extends React.Component{
         // - this.props.handleTempChange()
         // - this.props.handlePowerChange()
         // - this.props.menuChange()}
+        console.log(this.props.temperature);
     }
 
     toggle = (x) => {this.props.menuChange(x);}

@@ -37,7 +37,8 @@ class App extends React.Component{
         else if(this.state.page === 'SetRoomTemp'){
             return(<div className="text-center">
                 <h1 className="page-title">House Temperature</h1>
-                <SetRoomTemp/>
+                <SetRoomTemp changeHouseTemp={this.handleTempChange}
+                                temperature={this.state.temperature}/>
                 <ExitButton menuChange={this.handleMenuChange}/>
             </div>);
         }
